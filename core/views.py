@@ -32,8 +32,8 @@ def query(request):
     if len(unicode(request.POST)) == 0:
         return HttpResponseBadRequest()
 
-    if Patient.objects.filter(uid = request.POST["text"] ).count() == 1:
-        pat = Patient.objects.get(uid = request.POST["text"] )
+    if Patient.objects.filter(uid__iexact = request.POST["text"] ).count() == 1:
+        pat = Patient.objects.get(uid__iexact = request.POST["text"] )
         
         if pat.alive:
             params = {

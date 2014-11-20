@@ -57,7 +57,7 @@ def eval_json(json, request):
     uid = id_generator()
 
     #Check if the uid exists
-    while Patient.objects.filter(uid = uid ).count() == 1:
+    while Patient.objects.filter(uid__iexact = uid ).count() == 1:
         uid = id_generator()
 
     pat.uid = uid
