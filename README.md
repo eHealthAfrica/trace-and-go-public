@@ -12,4 +12,4 @@ Through assigning a unique number to every patient, on first contact and share t
 
 (Amsel => A miniature sms ebola lifeline)
 
-Amsel is licensed under [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
+[Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
