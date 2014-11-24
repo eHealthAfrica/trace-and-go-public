@@ -1,13 +1,3 @@
-"""
-Django settings for formhub_sms_webhook project.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
-"""
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 from core.backends import sms_send_telerivet
@@ -50,9 +40,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'formhub_sms_webhook.urls'
+ROOT_URLCONF = 'amsel.urls'
 
-WSGI_APPLICATION = 'formhub_sms_webhook.wsgi.application'
+WSGI_APPLICATION = 'amsel.wsgi.application'
 
 
 # Database
