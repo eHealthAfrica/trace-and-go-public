@@ -34,4 +34,11 @@ Please keep all discussions on github with the issues. Otherwise feel free to em
 1. The flow asks for the number and calls /query (on the server) with the number and retrieves the data
 1. Replies to the relative asking
 
+
+# Contribute
+
+Please check out the [issues](https://github.com/eHealthAfrica/Amsel/issues) we are currently workin on. Feel free to ask questions if you don't understand, or something is not quite clear. If you want some explanation please just email me and we can work on the details. 
+
+
+
 [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
