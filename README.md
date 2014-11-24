@@ -1,7 +1,7 @@
 Amsel
 ===========
 
-A huge problem in the current Ebola outbreak in West Africa is the traceability of people that have been admitted to health facilities. Unfortunately it is a very common case that health workers pick up infected people, admit them to a health facility and the person dies without the family knowing which facility the person was admitted to or where he is buried. 
+A huge problem in the current Ebola outbreak in West Africa is the traceability of people that have been admitted to health facilities. Unfortunately it is a very common case that health workers pick up infected people, admit them to a health facility and the person dies without the family knowing which facility the person was admitted to or where they are buried. 
 
 **We want to change this!**
 
@@ -10,7 +10,7 @@ Through assigning a unique number to every patient, on first contact and share t
 - See [doc/install.md](doc/install.md) for how to run the prototype
 - See [doc/services.md](doc/services.md) for a list of services we are currently using
 
-Please keep all discussions on github with the issues. Otherwise feel free to email me under didi.hoffmann@ehealthnigeria.org 
+Please keep all discussions on Github with the issues. Otherwise feel free to email us under didi.hoffmann@ehealthnigeria.org 
 
 (Amsel => A miniature sms ebola lifeline)
 
@@ -19,7 +19,7 @@ Please keep all discussions on github with the issues. Otherwise feel free to em
 ### Data entry
 
 1. A health care worker adds a new patient trough odk collect
-1. He adds his mobile number and the number of the family member or relative as well as some personal data
+1. They add the health care worker's mobile number and the number of the family member or relative as well as some personal data
 1. As soon as the form is submitted the formhub server triggers a web hook
 1. This assigns the patient a unique number/id and sends a text message to both the relative and health care worker
 
@@ -29,7 +29,7 @@ Please keep all discussions on github with the issues. Otherwise feel free to em
 
 ### Data retrieval 
 
-1. A sms is sent to a twilio number
+1. An SMS is sent to a twilio number
 1. This is then redirected to RapidPro which starts a flow
 1. The flow asks for the number and calls /query (on the server) with the number and retrieves the data
 1. Replies to the relative asking
@@ -37,7 +37,7 @@ Please keep all discussions on github with the issues. Otherwise feel free to em
 
 # Contribute
 
-Please check out the [issues](https://github.com/eHealthAfrica/Amsel/issues) we are currently workin on. Feel free to ask questions if you don't understand, or something is not quite clear. If you want some explanation please just email me and we can work on the details. 
+Please check out the [issues](https://github.com/eHealthAfrica/Amsel/issues) we are currently workin on. Feel free to ask questions if you don't understand, or something is not quite clear. If you want some explanation please just email us and we can work on the details. 
 
 
 
