@@ -10,6 +10,8 @@ Through assigning a unique number to every patient, on first contact and share t
 - See [doc/install.md](doc/install.md) for how to run the prototype
 - See [doc/services.md](doc/services.md) for a list of services we are currently using
 
+Please keep all discussions on github with the issues. Otherwise feel free to email me under didi.hoffmann@ehealthnigeria.org 
+
 (Amsel => A miniature sms ebola lifeline)
 
 ## Current flow
