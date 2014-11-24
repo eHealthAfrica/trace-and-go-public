@@ -10,6 +10,6 @@ Through assigning a unique number to every patient, on first contact and share t
 - See [doc/install.md](doc/install.md) for how to run the prototype
 - See [doc/services.md](doc/services.md) for a list of services we are currently using
 
-(Amsel => A miniture sms ebola lifeline)
+(Amsel => A miniature sms ebola lifeline)
 
-[Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
+Amsel is licensed under [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
