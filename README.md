@@ -12,7 +12,7 @@ Through assigning a unique number to every patient, on first contact and share t
 
 Please keep all discussions on Github with the issues. Otherwise feel free to email us under didi.hoffmann@ehealthnigeria.org 
 
-(Amsel => A miniature sms ebola lifeline)
+Amsel => A miniature sms ebola lifeline
 
 ## Current flow
 
@@ -39,6 +39,6 @@ Please keep all discussions on Github with the issues. Otherwise feel free to em
 
 Please check out the [issues](https://github.com/eHealthAfrica/Amsel/issues) we are currently workin on. Feel free to ask questions if you don't understand, or something is not quite clear. If you want some explanation please just email us and we can work on the details. 
 
-
+[About us](https://github.com/eHealthAfrica/jobs/blob/master/what-we-do.md)
 
 [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
