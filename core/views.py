@@ -15,6 +15,7 @@ def home(request):  # @UnusedVariable
 @require_POST
 @csrf_exempt
 def query(request):
+    
     # If a post_key is specified in the settings we use
     # it as a "security" measure
     post_key = getattr(settings, "POST_KEY", None)   
@@ -86,7 +87,8 @@ def submit(request):
         return_string_list = []
         for e in eval_method:
             return_string_list.append(unicode(e(json_object, request)))
-            return_string = unicode(return_string_list)
+        
+        return_string = unicode(return_string_list)
     else:
         #call the eval method below
         return_string = unicode(eval_method(json_object, request))

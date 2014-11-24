@@ -1,23 +1,13 @@
-########################
-# THIS IS AN EXAMPLE !!!
-########################
-#
-# This is the eval method to check what to do. Please overwrite for your needs
-# or set a method in settins.py with the same parameters
-# 
-#from core.models import Messages
-#from django.utils import timezone
-from django.core.mail import send_mail
-from etu.models import Patient
-
 import string
 import random
-from core.backends import sms_send_telerivet, sms_send_twilio
+
+from etu.models import Patient
+from core.backends import sms_send_twilio
+
 
 
 def id_generator(size=4, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
-
 
 
 # {
@@ -50,7 +40,7 @@ def id_generator(size=4, chars=string.ascii_uppercase + string.digits):
 
 
 
-def eval_json(json, request):
+def eval_json(json, request):  # @UnusedVariable
     
     pat = Patient()
 
@@ -81,18 +71,3 @@ def eval_json(json, request):
 
     return uid
     
-    #If the age is 21 send a message
-#     if "age" in json.keys() and json["age"] == "21":
-#         
-#         message = Messages()
-#         
-#         message.number = "+234 818 629 5584"
-#         message.message = "Someone with the age 21 was submitted"
-#         message.when_to_send = timezone.now()
-#         message.hook_ip = request.META.get('REMOTE_ADDR')
-#         message.hook_json_message = json
-#         message.save()
-#         
-#         return message
-#     
-#     return
