@@ -7,5 +7,6 @@ A huge problem in the current Ebola outbreak in West Africa is the traceability 
 
 Through assigning a unique number to every patient, on first contact and share this with the family, we can offer a text base (SMS) service that family members can query to find out the status of their loved ones. 
 
-- See [install.md](install.md) for how to run the prototype
-- See [services.md](services.md) for a list of services we are currently using
+- See [doc/install.md](doc/install.md) for how to run the prototype
+- See [doc/services.md](doc/services.md) for a list of services we are currently using
+
