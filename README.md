@@ -41,4 +41,4 @@ Please check out the [issues](https://github.com/eHealthAfrica/Amsel/issues) we 
 
 [About us](https://github.com/eHealthAfrica/jobs/blob/master/what-we-do.md)
 
-[Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
+Licensed under the [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt).
