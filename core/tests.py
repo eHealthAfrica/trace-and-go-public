@@ -166,3 +166,22 @@ class PatientViewSetTests(TestCase):
         self.assertEqual(length_before + 1, length_after)
         self.assertEqual(response.status_code, 201)
 
+    def test_patch_patient_not_authenticated(self):
+        """
+        See that /api/patients/?search=q returns patients that fullfil those
+        search requirements.
+        """
+
+        patient = Patient.objects.all().first()
+        data = {
+            "first_name": "Janice"
+        }
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        url = '/api/patients/%s/' % (patient.pk)
+        response = self.client.patch(url, data)
+        updated_patient = Patient.objects.all().first()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(updated_patient.first_name, 'Janice')
+        
+        
