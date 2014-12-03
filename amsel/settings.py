@@ -23,7 +23,9 @@ INSTALLED_APPS = (
     'south',
     'core',
     'djrill',
-    'etu'
+    'etu',
+    'rest_framework',
+    'rest_framework.authtoken'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,6 +70,22 @@ USE_TZ = True
 SECRET_KEY = os.environ.get("SECRET_KEY", "!@#THIS_IS_REALLY_SECURE!@#$%")
 
 ALLOWED_HOSTS = []
+
+# Rest Framework settings
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+
+}
 
 # This is a key that needs to be appended to the url when posting
 # This is not really security but has become some sort of standard over
