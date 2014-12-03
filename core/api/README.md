@@ -4,6 +4,8 @@
 
 This runs on basic token authentication. Each user can have a token assigned to them. These can be created in the `admin/` backend.
 
+Reading (`GET`) doesn't require authentication. Writing does.
+
 ## GET
 
 Access the API:
