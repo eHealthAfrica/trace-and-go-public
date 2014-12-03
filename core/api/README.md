@@ -41,11 +41,11 @@ Returns:
 {"detail":"Authentication credentials were not provided."}
 ```
 
-Access the API with a Token:
+But, POSTing to the API with a Token:
 ```
-curl -X POST http://127.0.0.1:8000/api/patients/ -H 'Authorization: Token 4c584b745377f31b4f517c19dab3c2bcf639dbfe' -H 'Content-Type: application/json' -d '{"uid":"12345679","first_name":"Joan","last_name":"Doe","enter_number":"+182311221","caregiver_number":"+223111811","age":"27","geolocation":"31.11","etu":"Dunno what this is.","alive":true}'
+curl -X POST http://127.0.0.1:8000/api/patients/ -H 'Authorization: Token <auth_token>' -H 'Content-Type: application/json' -d '{"uid":"12345679","first_name":"Joan","last_name":"Doe","enter_number":"+182311221","caregiver_number":"+223111811","age":"27","geolocation":"31.11","etu":"Dunno what this is.","alive":true}'
 ```
-(note the token, and the content type, as well as the json formatting)
+(note the token, the content type, and the json formatting)
 
 
 Returns the posted object:
@@ -55,3 +55,12 @@ Returns the posted object:
 ```
 
 If there are any errors with the POST, this will show.
+
+## PATCH: 
+
+To update a specific patient, you can PATCH to their url:
+
+```
+curl -X PATCH http://127.0.0.1:8000/api/patients/<patient_pk>/ -H 'Authorization: Token <auth_token>' -H 'Content-Type: application/json' -d '{"alive":false}'
+```
+

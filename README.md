@@ -9,6 +9,7 @@ Through assigning a unique number to every patient, on first contact and share t
 
 - See [doc/install.md](doc/install.md) for how to run the prototype
 - See [doc/services.md](doc/services.md) for a list of services we are currently using
+- See [core/api/README.md](core/api/README.md) for an overview of the API
 
 Please keep all discussions on Github with the issues. Otherwise feel free to email us under didi.hoffmann@ehealthnigeria.org 
 
