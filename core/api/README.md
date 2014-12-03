@@ -1,5 +1,9 @@
 > A really basic rest API.
 
+## Authentication
+
+This runs on basic token authentication. Each user can have a token assigned to them. These can be created in the `admin/` backend.
+
 ## GET
 
 Access the API:
