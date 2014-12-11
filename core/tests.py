@@ -69,7 +69,31 @@ class TestHTTPServer(TestCase):
         response = self.client.post(reverse('submit'), {"Something that is not JSON":""})
         self.assertEqual(response.status_code, 400) # 400 Bad Request
 
-        
+
+class SMSInterfaceTests(TestCase):
+
+    def test_number_formatter(self):
+        """
+        Checks that the number is formatted nicely
+        """
+
+        mes = sms_send_test("+1 800-642-7676", "testing")
+
+        #Check that the return is correct
+        self.assertEqual(mes, json.dumps({'phone': "+18006427676", 'text': "testing"}))
+
+    def test_bad_number(self):
+        '''
+        Checks that a bad number just returns the number
+        In the future this will create some sort of error
+        '''
+
+        mes = sms_send_test("+1123", "testing")
+
+        #Check that the return is correct
+        self.assertEqual(mes, json.dumps({'phone': "+1123", 'text': "testing"}))
+
+
 class PatientViewSetTests(TestCase):
     fixtures = ['patient.json']
 

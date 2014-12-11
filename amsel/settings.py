@@ -104,9 +104,17 @@ EVAL_METHOD = eval_json
 #Set the backend to send the sms
 SMS_BACKEND = sms_send_telerivet
 
+
+COUNTRY_CODE = os.environ.get("COUNTRY_CODE", None)
+
+
 # Set the auth key for you text.it account
 # get it under http://textit.in
 TEXTIT_AUT = os.environ.get("TEXTIT_AUT", "!@#THIS_IS_REALLY_SECURE!@#$%")
+
+# Set the auth key for you rapidpro.io account
+# get it under https://rapidpro.io/org/home/
+RAPIDPRO_AUT =  os.environ.get("RAPIDPRO_AUT", "!@#THIS_IS_REALLY_SECURE!@#$%")
 
 #Telerivet REST API options
 TE_API_KEY = os.environ.get("API_KEY", "!@#THIS_IS_REALLY_SECURE!@#$%")

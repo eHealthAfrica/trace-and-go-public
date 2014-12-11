@@ -54,3 +54,4 @@ docs/_build/
 
 .settings
 db.sqlite3
+.idea

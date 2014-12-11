@@ -7,7 +7,6 @@ import json
 from core.eval_methods import eval_json
 from etu.models import Patient
 
-
 @require_GET
 def home(request):  # @UnusedVariable
     return HttpResponse("Hello, world. This is the webhook root. Nothing much to see here.")
