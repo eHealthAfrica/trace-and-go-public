@@ -7,7 +7,7 @@ from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import json
-
+from django.core.cache import cache
 from models import Patient
 import re
 
@@ -89,6 +89,33 @@ def smswebhook(request):
     """
     This is called by the sms gateway. For now this is rapidpro
     """
+
+    #Check if the number is in the cache
+    if not cache.get(request.POST["phone"]):
+        #Only allow a call every 10 seconds
+        cache.set(request.POST["phone"], '', 5)
+
+        long_cache_name = "long_%s" % request.POST["phone"]
+
+        if cache.get(long_cache_name):
+            cache.set(long_cache_name, cache.get(long_cache_name) + 1)
+        else:
+            cache.set(long_cache_name, 1)
+
+        if cache.get(long_cache_name) >= 25:
+            params = {
+                'phone': request.POST["phone"],
+                'text': wordings.too_many_requests_ever
+            }
+            return HttpResponse(json.dumps(params))
+    else:
+        params = {
+            'phone': request.POST["phone"],
+            'text': wordings.too_many_requests
+        }
+        return HttpResponse(json.dumps(params))
+
+
 
     sms_content = request.POST["text"]
 
