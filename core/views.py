@@ -1,5 +1,6 @@
 import random
 import string
+import amsel.wordings as wordings
 from django.http.response import HttpResponse, HttpResponseForbidden,\
     HttpResponseBadRequest
 from django.views.decorators.http import require_GET, require_POST
@@ -72,7 +73,7 @@ def submit(request):
     pat.save()
 
     #Send the text messages
-    text = "The patient %s %s has the information code %s" % (pat.first_name, pat.last_name, uid )
+    text = wordings.patient_info % (pat.first_name, pat.last_name, uid )
 
     settings.SMS_BACKEND(pat.enter_number, text)
     settings.SMS_BACKEND(pat.caregiver_number, text)
@@ -101,9 +102,9 @@ def smswebhook(request):
             pat = Patient.objects.get(uid__iexact = sms_content )
 
             if pat.etu:
-                text = "The patient %s %s is at %s" % (pat.first_name, pat.last_name, pat.etu )
+                text = wordings.patient_location % (pat.first_name, pat.last_name, pat.etu )
             else:
-                text = "The system has not updated the location of the patient."
+                text = wordings.patient_no_info
 
             params = {
                 'phone': request.POST["phone"],
@@ -113,12 +114,12 @@ def smswebhook(request):
         else:
             params = {
                 'phone': request.POST["phone"],
-                'text': 'We can not find a patient with that information id.'
+                'text': wordings.patient_not_found
             }
     else:
         params = {
             'phone': request.POST["phone"],
-            'text': 'This is not a valid information id.'
+            'text': wordings.invalid_id
         }
 
 
