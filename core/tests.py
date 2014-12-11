@@ -1,3 +1,4 @@
+from core.views import PATIENT_REGEX
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -8,15 +9,12 @@ from django.core.management import call_command
 import json
 import datetime
 from django.contrib.auth.models import User
+import re
 
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 
-from etu.models import Patient
-
-
-test_post = '{"_id": 115628, "_attachments": [], "name": "testing", "_submission_time": "2014-08-05T17:14:25", "age": "21", "_uuid": "0efee5c4-6bcb-4f92-8abd-8f631eb0270a", "_bamboo_dataset_id": "", "_tags": [], "_geolocation": [null, null], "_xform_id_string": "tutorial_tutorial", "_userform_id": "a_tutorial_tutorial", "_status": "submitted_via_web", "meta/instanceID": "uuid:0efee5c4-6bcb-4f92-8abd-8f631eb0270a", "has_children": "0", "formhub/uuid": "17d3747ce512463988f596cd847d0fcf"}'
-
+from models import Patient
 
 
 class TestHTTPServer(TestCase):
@@ -106,20 +104,68 @@ class PatientViewSetTests(TestCase):
             is_superuser=True)
         self.token = Token.objects.create(user=self.user)
 
-    def test_get_patients_not_authenticated(self):
+    def test_new_formhub_submit(self):
         """
-        See that /api/patients/ returns a list of all patients.
+        Try to submit a new patient as formhub would
         """
-        length = len(Patient.objects.all())
-        response = self.client.get('/api/patients/')
-        self.assertEqual(len(response.data), length)
+        test_data = '{\
+            "last_name": "Bob",\
+            "_uuid": "934dd0ed-a956-4224-a36f-f9c71da5b229",\
+            "_bamboo_dataset_id": "",\
+            "enter_number": "12345678",\
+            "moh_id": "Tbhi",\
+            "_tags": [],\
+            "_xform_id_string": "amsel",\
+            "meta/instanceID": "uuid:934dd0ed-a956-4224-a36f-f9c71da5b229",\
+            "caregiver_number": "123456799",\
+            "formhub/uuid": "e35066ee71c44067872f048deacc1b89",\
+            "first_name": "Monty",\
+            "_submission_time": "2014-12-11T17:09:15",\
+            "_geolocation": [\
+                "",\
+                ""\
+            ],\
+            "_attachments": [],\
+            "_userform_id": "ebolalr_amsel",\
+            "_status": "submitted_via_web",\
+            "_id": "85971"\
+        }'
+
+
+        settings.SMS_BACKEND = sms_send_test
+
+        length_before = len(Patient.objects.all())
+
+
+        response = self.client.post('/submit', test_data, content_type="application/json")
+
+        patient_code_regex = re.compile(PATIENT_REGEX)
+        self.assertTrue( patient_code_regex.match( response.content ))
+
+        length_after = len(Patient.objects.all())
+
+        self.assertEqual(length_before + 1, length_after)
         self.assertEqual(response.status_code, 200)
 
-    def test_search_patients_not_authenticated(self):
+
+    def test_get_patients_not_authenticated(self):
+        """
+        See that /api/*/ returns a 403 if not authenticated
+        """
+        response = self.client.get('/api/')
+        self.assertEqual(response.status_code, 403)
+
+        response = self.client.get('/api/patients/')
+        self.assertEqual(response.status_code, 403)
+
+    def test_search_patients_authenticated(self):
         """
         See that /api/patients/?search=q returns patients that fullfil those
         search requirements.
         """
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+
         search_term = 'Jane'
         response = self.client.get('/api/patients/?search=%s' % (search_term))
 
@@ -128,16 +174,19 @@ class PatientViewSetTests(TestCase):
                 obj['last_name'] == search_term)
         self.assertEqual(response.status_code, 200)
 
-    def test_filter_patients_not_authenticated(self):
+    def test_filter_patients_authenticated(self):
         """
         See that /api/patients/?search=q returns patients that fullfil those
         search requirements.
         """
-        filter_value = True
-        response = self.client.get('/api/patients/?alive=%s' % (filter_value))
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+
+        filter_value = u"Doe"
+        response = self.client.get('/api/patients/?last_name=%s' % (filter_value))
 
         for obj in response.data:
-            self.assertEqual(obj['alive'], filter_value)
+            self.assertEqual(obj['last_name'], filter_value)
         self.assertEqual(response.status_code, 200)
 
     def test_post_new_patient_not_authenticated(self):
@@ -160,7 +209,7 @@ class PatientViewSetTests(TestCase):
 
         self.assertEqual(response.status_code, 403)
 
-    def test_post_new_patient_not_authenticated(self):
+    def test_post_new_patient_authenticated(self):
         """
         See that /api/patients/?search=q returns patients that fullfil those
         search requirements.
@@ -174,9 +223,8 @@ class PatientViewSetTests(TestCase):
             "last_name": "Doe",
             "uid": "1234",
             "etu": "Test.",
-            "age": "27",
+            "moh_id": "123",
             "enter_number": "+182311121",
-            "alive": "false",
             "caregiver_number": "+123111811"
             }
         
@@ -190,7 +238,7 @@ class PatientViewSetTests(TestCase):
         self.assertEqual(length_before + 1, length_after)
         self.assertEqual(response.status_code, 201)
 
-    def test_patch_patient_not_authenticated(self):
+    def test_patch_patient_authenticated(self):
         """
         See that /api/patients/?search=q returns patients that fullfil those
         search requirements.

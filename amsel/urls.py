@@ -12,13 +12,11 @@ router.register(r'patients', PatientViewSet)
 
 
 urlpatterns = patterns('',
-    # Examples:
-    url(r'^$', 'core.views.home', name='home'),
-    url(r'^submit$', 'core.views.submit', name='submit'),
-    
-    url(r'^query$', 'core.views.query', name='query'),
 
-    
+    url(r'^submit$', 'core.views.submit', name='submit'),
+
+    url(r'^smswebhook$', 'core.views.smswebhook', name='smswebhook'),
+
     url(r'^admin/', include(admin.site.urls)),
 
     # API Routes

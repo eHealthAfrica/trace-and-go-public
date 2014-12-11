@@ -1,6 +1,6 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from core.backends import sms_send_telerivet
+from core.backends import sms_send_telerivet, sms_send_rapidpro
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -23,7 +23,6 @@ INSTALLED_APPS = (
     'south',
     'core',
     'djrill',
-    'etu',
     'rest_framework',
     'rest_framework.authtoken'
 )
@@ -77,7 +76,7 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -93,16 +92,9 @@ REST_FRAMEWORK = {
 # http://URL/submit?key=abc
 #POST_KEY = "abc"
 
-# You can set the method that should be used to evaluate your
-# json here.
-from core.eval_methods import eval_json
-EVAL_METHOD = eval_json
-#This could also be a list of methods if you want to evaluate more than one
-#EVAL_METHOD = [eval_json, eval_json2]
-
 
 #Set the backend to send the sms
-SMS_BACKEND = sms_send_telerivet
+SMS_BACKEND = sms_send_rapidpro
 
 
 COUNTRY_CODE = os.environ.get("COUNTRY_CODE", None)
