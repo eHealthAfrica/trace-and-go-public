@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url, include
 
 from django.contrib import admin
+from django.views.generic import RedirectView
+
 admin.autodiscover()
 
 from rest_framework import routers
@@ -24,5 +26,8 @@ urlpatterns = patterns('',
 
     # API Auth Urls
     url(r'^api-auth/', include('rest_framework.urls',
-        namespace='rest_framework'))
+        namespace='rest_framework')),
+
+    # For now we alwys redirect to the admin login
+    url(r'^.*$', RedirectView.as_view(url='admin/', permanent=False), name='index')
 )

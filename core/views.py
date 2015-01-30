@@ -29,13 +29,10 @@ def check_post_key(request):
 
 
 
-def id_generator(size=4, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
-
-
 @require_POST
 @csrf_exempt
 def submit(request):
+    from models import id_generator
 
     postKeyReturn = check_post_key(request)
     if postKeyReturn != True:
@@ -62,21 +59,30 @@ def submit(request):
 
 
     pat.uid = uid
-    pat.first_name = json_object["first_name"]
-    pat.last_name = json_object["last_name"]
-    pat.moh_id = json_object["moh_id"]
-    pat.enter_number = json_object["enter_number"]
-    pat.caregiver_number = json_object["caregiver_number"]
+    pat.first_name = json_object.get("first_name") or None
+    pat.last_name = json_object.get("last_name") or None
+    pat.moh_id = json_object.get("moh_id") or None
+    pat.enter_number = json_object.get("enter_number") or None
+    pat.caregiver_number = json_object.get("caregiver_number") or None
 
     pat.json = unicode(json_object)
 
     pat.save()
 
     #Send the text messages
-    text = wordings.patient_info % (pat.first_name, pat.last_name, uid )
+    mapping = {
+        'first_name':pat.first_name,
+        'second_name':pat.last_name,
+        'unfo_code':uid
+    }
 
-    settings.SMS_BACKEND(pat.enter_number, text)
-    settings.SMS_BACKEND(pat.caregiver_number, text)
+    text = wordings.patient_info % mapping
+
+    if pat.enter_number:
+        settings.SMS_BACKEND(pat.enter_number, text)
+
+    if pat.caregiver_number:
+        settings.SMS_BACKEND(pat.caregiver_number, text)
 
     return HttpResponse(uid)
 
@@ -129,7 +135,13 @@ def smswebhook(request):
             pat = Patient.objects.get(uid__iexact = sms_content )
 
             if pat.etu:
-                text = wordings.patient_location % (pat.first_name, pat.last_name, pat.etu )
+                mapping = {
+                    'first_name':pat.first_name,
+                    'second_name':pat.last_name,
+                    'h_facility':pat.etu
+                }
+
+                text = wordings.patient_location % mapping
             else:
                 text = wordings.patient_no_info
 
