@@ -1,6 +1,6 @@
 Django==1.6.8
 South==1.0
-Telerivet-Python-Client==1.0
++git+git://github.com/Telerivet/telerivet-python-client
 django-filter==0.9.0
 djangorestframework==3.0.0
 djrill==1.1.1
