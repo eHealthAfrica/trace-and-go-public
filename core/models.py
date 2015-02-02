@@ -55,7 +55,28 @@ class Patient(models.Model):
                 mapping = {
                     'first_name':self.first_name,
                     'second_name':self.last_name,
-                    'status':self.status
+                    'status':self.get_status_display()
+                }
+
+                text = wordings.patient_status % mapping
+                settings.SMS_BACKEND(self.caregiver_number, text)
+
+        else:
+            if self.etu:
+                mapping = {
+                    'first_name':self.first_name,
+                    'second_name':self.last_name,
+                    'h_facility':self.etu
+                }
+
+                text = wordings.patient_location % mapping
+                settings.SMS_BACKEND(self.caregiver_number, text)
+
+            if self.status:
+                mapping = {
+                    'first_name':self.first_name,
+                    'second_name':self.last_name,
+                    'status':self.get_status_display()
                 }
 
                 text = wordings.patient_status % mapping
