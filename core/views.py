@@ -67,22 +67,9 @@ def submit(request):
 
     pat.json = unicode(json_object)
 
+    #Message is sent through the save method
     pat.save()
 
-    #Send the text messages
-    mapping = {
-        'first_name':pat.first_name,
-        'second_name':pat.last_name,
-        'unfo_code':uid
-    }
-
-    text = wordings.patient_info % mapping
-
-    if pat.enter_number:
-        settings.SMS_BACKEND(pat.enter_number, text)
-
-    if pat.caregiver_number:
-        settings.SMS_BACKEND(pat.caregiver_number, text)
 
     return HttpResponse(uid)
 
@@ -138,6 +125,7 @@ def smswebhook(request):
                 mapping = {
                     'first_name':pat.first_name,
                     'second_name':pat.last_name,
+                    'patient_id':pat.moh_id
                     'h_facility':pat.etu
                 }
 
