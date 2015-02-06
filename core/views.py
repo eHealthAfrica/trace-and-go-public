@@ -125,7 +125,7 @@ def smswebhook(request):
                 mapping = {
                     'first_name':pat.first_name,
                     'second_name':pat.last_name,
-                    'patient_id':pat.moh_id
+                    'patient_id':pat.moh_id,
                     'h_facility':pat.etu
                 }
 
