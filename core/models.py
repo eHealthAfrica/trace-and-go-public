@@ -69,7 +69,7 @@ class Patient(models.Model):
                 mapping = {
                     'first_name':self.first_name,
                     'second_name':self.last_name,
-                    'unfo_code':self
+                    'unfo_code':self.uid
                 }
 
                 text = wordings.patient_info % mapping
