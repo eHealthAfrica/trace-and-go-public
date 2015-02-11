@@ -81,7 +81,7 @@ class Patient(models.Model):
                     settings.SMS_BACKEND(self.caregiver_number, text)
 
 
-                settings.SMS_BACKEND(self.caregiver_number, wordings.inital_message)
+                settings.SMS_BACKEND(self.caregiver_number, wordings.initial_message)
 
                 if self.etu:
                     mapping = {
