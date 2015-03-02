@@ -129,6 +129,16 @@ def smswebhook(request):
                 }
 
                 text = wordings.patient_location % mapping
+
+                if pat.status:
+                    mapping = {
+                        'first_name':pat.first_name,
+                        'second_name':pat.last_name,
+                        'status':pat.get_status_display()
+                    }
+
+                    settings.SMS_BACKEND(pat.caregiver_number, wordings.patient_status % mapping)
+
             else:
                 text = wordings.patient_no_info
 
