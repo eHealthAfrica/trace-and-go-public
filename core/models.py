@@ -21,6 +21,7 @@ class Patient(models.Model):
     etu = models.CharField(max_length=250, blank=True, null=True)
 
     PATIENT_STATUS=(
+        ("A", "Just admitted"),
         ("S", "Stable"),
         ("C", "Condition not improving"),
         ("G", "Getting better"),
