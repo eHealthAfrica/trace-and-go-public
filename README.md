@@ -35,7 +35,7 @@ Please keep all discussions on Github with the issues. Otherwise feel free to em
 
 ### Data retrieval 
 
-1. The relative wishing for details on their loved one SMS is sent to a shortcode number
+1. The relative wishing for updates on the status of their loved one sends a message containing the unique ID of their relative to the designated shortcode number
 1. This is then redirected to RapidPro which starts a flow
 1. The flow asks for the number and calls /query (on the server) with the number and retrieves the data
 1. Relative receives a message with the status of the patient
