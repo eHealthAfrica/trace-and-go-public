@@ -17,16 +17,16 @@ Please keep all discussions on Github with the issues. Otherwise feel free to em
 
 ### Data entry
 
-1. A health care worker adds a new patient through the online interface (connected to Formhub a.k.a. odk collect)
+1. A health care worker adds a new patient through the interface. This can be through Formhub a.k.a. odk collect (for offline) or through the Amsel admin interface.
 1. They add the case investigator's mobile number and the number of the family member or relative as well as some personal data
-1. As soon as the form is submitted the formhub server triggers a web hook
+1. As soon as the form is submitted the formhub server triggers a web hook (if formhub is used)
 1. This assigns the patient a unique number/id
-2. 4 text messages are triggered: 
+2. The text messages are triggered: 
 
 
-|To the relative (3 messages)   | To the case investigator (1 message) |   
+|To the relative  | To the case investigator |   
 |-----|-----|
-|<ol><li> Gives the unique number,</li><li> Says: "You will be notified of all changes in the status and location of your loved one",</li> <li>Gives the location of the patient</li></ol> | 1. Gives the unique number (as above)  |
+|<ol><li> Gives the unique number,</li><li> Says: "You will be notified of all changes in the status and location of your loved one",</li></ol> | 1. Gives the unique number (as above)  |
 
 ### Data modification
 
@@ -36,8 +36,7 @@ Please keep all discussions on Github with the issues. Otherwise feel free to em
 ### Data retrieval 
 
 1. The relative wishing for updates on the status of their loved one sends a message containing the unique ID of their relative to the designated shortcode number
-1. This is then redirected to RapidPro which starts a flow
-1. The flow asks for the number and calls /query (on the server) with the number and retrieves the data
+1. This is then redirected to the Amsel Backend (/smswebhook)
 1. Relative receives a message with the status of the patient
 
 # Contribute
