@@ -1,6 +1,6 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from core.backends import sms_send_telerivet, sms_send_rapidpro
+from core.backends import sms_send_telerivet, sms_send_rapidpro  # noqa
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -92,7 +92,7 @@ REST_FRAMEWORK = {
 # This is not really security but has become some sort of standard over
 # the years. So if this is specified the post needs to be like:
 # http://URL/submit?key=abc
-#POST_KEY = "abc"
+# POST_KEY = "abc"
 
 
 # Set the backend to send the sms

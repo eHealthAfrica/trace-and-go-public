@@ -1,9 +1,7 @@
-import random
-import string
 import amsel.wordings as wordings
 from django.http.response import HttpResponse, HttpResponseForbidden,\
     HttpResponseBadRequest
-from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 import json
@@ -35,7 +33,7 @@ def submit(request):
     from models import id_generator
 
     postKeyReturn = check_post_key(request)
-    if postKeyReturn != True:
+    if postKeyReturn is not True:
         return postKeyReturn
 
     # Because the post is not indexed we have to check the key
@@ -46,6 +44,7 @@ def submit(request):
     try:
         json_object = json.loads(unicode(request.body))
     except ValueError as e:
+        print e  # TODO: use real logging
         # The json is not valid
         return HttpResponseBadRequest()
 

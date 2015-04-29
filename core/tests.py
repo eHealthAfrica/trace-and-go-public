@@ -2,12 +2,8 @@ from core.views import PATIENT_REGEX
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.utils import timezone
 from core.backends import sms_send_test
-import time
-from django.core.management import call_command
 import json
-import datetime
 from django.contrib.auth.models import User
 import re
 
