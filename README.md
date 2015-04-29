@@ -18,10 +18,10 @@ Please keep all discussions on GitHub with the issues. Otherwise feel free to em
 ### Data entry
 
 1. A health care worker adds a new patient through the interface. This can be through formhub a.k.a. ODK Collect (for offline use) or through the TAG admin interface.
-1. They add the case investigator’s mobile number and the number of the family member or relative as well as some personal data
-1. As soon as the form is submitted, the formhub server triggers a web hook (if formhub is used)
-1. This assigns the patient a unique number/id
-2. The text messages are triggered: 
+2. They add the case investigator’s mobile number and the number of the family member or relative as well as some personal data
+3. If formhub is used, as soon as the form is submitted, the formhub server triggers a web hook
+4. This assigns the patient a unique number/id
+5. The following text messages are triggered: 
 
 
 |To the relative  | To the case investigator |   
@@ -36,8 +36,8 @@ Please keep all discussions on GitHub with the issues. Otherwise feel free to em
 ### Data retrieval 
 
 1. The relative wishing for updates on the status of their loved one sends a message containing the unique ID of their relative to the designated shortcode number
-1. This is then redirected to the TAG backend (/smswebhook)
-1. Relative receives a message with the status of the patient
+2. This is then redirected to the TAG backend (/smswebhook)
+3. Relative receives a message with the status of the patient
 
 # Contribute
 
