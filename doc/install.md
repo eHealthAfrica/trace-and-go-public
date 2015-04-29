@@ -9,9 +9,6 @@ First set up your local env.
     $ pip install -r requirements.txt
     $ ./manage syncdb
     $ ./manage migratedb
-    # Get the keys from https://www.twilio.com
-    $ export TW_SID=XYZ
-    $ export TW_AUTH=XYZ
     $ ./manage runserver
     
 You might have to tunnel the requests to your local dev server through ssh. If you are using a formhub that is not local.
