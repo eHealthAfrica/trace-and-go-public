@@ -16,21 +16,21 @@ def get_phone_obj(to):
         pnumber = phonenumbers.parse(to, country_code)
 
         if not phonenumbers.is_valid_number(pnumber):
-            #If it is invalid let someone else deal with it
+            # If it is invalid let someone else deal with it
             return to
 
-        #Everything seams to be ok so we return a nice E164 number
+        # Everything seams to be ok so we return a nice E164 number
         return phonenumbers.format_number(pnumber, phonenumbers.PhoneNumberFormat.E164)
 
     except phonenumbers.phonenumberutil.NumberParseException:
-        #TODO: In the futre we need some sort of way to notify people that the number is wrong. For now don't fail
+        # TODO: In the futre we need some sort of way to notify people that the number is wrong. For now don't fail
         return to
 
 
 def sms_send_textit(to, message):
     post_url = "https://api.textit.in/api/v1/sms.json"
 
-    #Clean the number (Add area code etc ... )
+    # Clean the number (Add area code etc ... )
     to = get_phone_obj(to)
 
     params = {
@@ -59,10 +59,11 @@ def sms_send_textit(to, message):
 
     return response.json()
 
+
 def sms_send_rapidpro(to, message):
     post_url = "https://rapidpro.io/api/v1/messages.json"
 
-    #Clean the number (Add area code etc ... )
+    # Clean the number (Add area code etc ... )
     to = get_phone_obj(to)
 
     params = {
@@ -98,7 +99,7 @@ import telerivet
 def sms_send_telerivet(to, message):
     from django.conf import settings
 
-    #Clean the number (Add area code etc ... )
+    # Clean the number (Add area code etc ... )
     to = get_phone_obj(to)
 
     # from https://telerivet.com/dashboard/api
@@ -126,7 +127,7 @@ from twilio.rest import TwilioRestClient
 def sms_send_twilio(to, message):
     from django.conf import settings
 
-    #Clean the number (Add area code etc ... )
+    # Clean the number (Add area code etc ... )
     to = get_phone_obj(to)
 
     # Your Account Sid and Auth Token from twilio.com/user/account
@@ -143,7 +144,7 @@ def sms_send_twilio(to, message):
 
 def sms_send_test(to, message):
 
-    #Clean the number (Add area code etc ... )
+    # Clean the number (Add area code etc ... )
     to = get_phone_obj(to)
 
     params = {
@@ -152,4 +153,3 @@ def sms_send_test(to, message):
     }
 
     return json.dumps(params)
-

@@ -2,12 +2,8 @@ from core.views import PATIENT_REGEX
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.utils import timezone
 from core.backends import sms_send_test
-import time
-from django.core.management import call_command
 import json
-import datetime
 from django.contrib.auth.models import User
 import re
 
@@ -18,20 +14,19 @@ from models import Patient
 
 
 class TestHTTPServer(TestCase):
-    
+
     def _delete_post_key(self):
-        #Make sure we have security disabled
+        # Make sure we have security disabled
         if getattr(settings, "POST_KEY", False):
             del settings.POST_KEY
 
-    
     def test_get_will_fail(self):
         """
         We should not be able to use get on the /submit url
         """
         response = self.client.get(reverse('submit'))
         self.assertEqual(response.status_code, 405)
-        
+
     def test_post_without_api_key(self):
         """
         If we have a POST_KEY set it should require it
@@ -39,13 +34,13 @@ class TestHTTPServer(TestCase):
 
         settings.POST_KEY = "abc"
 
-        # No post key        
+        # No post key
         response = self.client.post(reverse('submit'))
-        self.assertEqual(response.status_code, 400) # 400 Bad Request
-        
+        self.assertEqual(response.status_code, 400)  # 400 Bad Request
+
         # Bad post key
         response = self.client.post("%s?key=something" % reverse('submit'))
-        self.assertEqual(response.status_code, 403) # 403 Forbidden
+        self.assertEqual(response.status_code, 403)  # 403 Forbidden
 
     def test_bad_post_keys(self):
         """
@@ -53,19 +48,18 @@ class TestHTTPServer(TestCase):
         """
         self._delete_post_key()
 
-        response = self.client.post(reverse('submit'), {"A":"A", "B":"B"})
-        self.assertEqual(response.status_code, 400) # 400 Bad Request
-
+        response = self.client.post(reverse('submit'), {"A": "A", "B": "B"})
+        self.assertEqual(response.status_code, 400)  # 400 Bad Request
 
     def test_bad_json(self):
         """
         Json has to be valid
         """
-        
+
         self._delete_post_key()
-            
-        response = self.client.post(reverse('submit'), {"Something that is not JSON":""})
-        self.assertEqual(response.status_code, 400) # 400 Bad Request
+
+        response = self.client.post(reverse('submit'), {"Something that is not JSON": ""})
+        self.assertEqual(response.status_code, 400)  # 400 Bad Request
 
 
 class SMSInterfaceTests(TestCase):
@@ -77,7 +71,7 @@ class SMSInterfaceTests(TestCase):
 
         mes = sms_send_test("+1 800-642-7676", "testing")
 
-        #Check that the return is correct
+        # Check that the return is correct
         self.assertEqual(mes, json.dumps({'phone': "+18006427676", 'text': "testing"}))
 
     def test_bad_number(self):
@@ -88,7 +82,7 @@ class SMSInterfaceTests(TestCase):
 
         mes = sms_send_test("+1123", "testing")
 
-        #Check that the return is correct
+        # Check that the return is correct
         self.assertEqual(mes, json.dumps({'phone': "+1123", 'text': "testing"}))
 
 
@@ -131,22 +125,19 @@ class PatientViewSetTests(TestCase):
             "_id": "85971"\
         }'
 
-
         settings.SMS_BACKEND = sms_send_test
 
         length_before = len(Patient.objects.all())
 
-
         response = self.client.post('/submit', test_data, content_type="application/json")
 
         patient_code_regex = re.compile(PATIENT_REGEX)
-        self.assertTrue( patient_code_regex.match( response.content ))
+        self.assertTrue(patient_code_regex.match(response.content))
 
         length_after = len(Patient.objects.all())
 
         self.assertEqual(length_before + 1, length_after)
         self.assertEqual(response.status_code, 200)
-
 
     def test_get_patients_not_authenticated(self):
         """
@@ -170,8 +161,8 @@ class PatientViewSetTests(TestCase):
         response = self.client.get('/api/patients/?search=%s' % (search_term))
 
         for obj in response.data:
-            self.assertTrue(obj['first_name'] == search_term or 
-                obj['last_name'] == search_term)
+            self.assertTrue(obj['first_name'] == search_term or
+                            obj['last_name'] == search_term)
         self.assertEqual(response.status_code, 200)
 
     def test_filter_patients_authenticated(self):
@@ -204,7 +195,7 @@ class PatientViewSetTests(TestCase):
             "enter_number": "+182311121",
             "alive": "false",
             "caregiver_number": "+123111811"
-            }
+        }
         response = self.client.post('/api/patients/', data)
 
         self.assertEqual(response.status_code, 403)
@@ -226,10 +217,10 @@ class PatientViewSetTests(TestCase):
             "moh_id": "123",
             "enter_number": "+182311121",
             "caregiver_number": "+123111811"
-            }
-        
+        }
+
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
-        
+
         response = self.client.post('/api/patients/', data)
 
         length_after = len(Patient.objects.all())
@@ -255,5 +246,3 @@ class PatientViewSetTests(TestCase):
         updated_patient = Patient.objects.all().first()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(updated_patient.first_name, 'Janice')
-        
-        
