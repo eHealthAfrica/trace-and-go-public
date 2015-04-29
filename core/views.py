@@ -11,6 +11,7 @@ from django.core.cache import cache
 from models import Patient
 import re
 
+
 def check_post_key(request):
     # If a post_key is specified in the settings we use
     # it as a "security" measure
@@ -19,14 +20,13 @@ def check_post_key(request):
     if post_key:
         if "key" in request.GET:
             if request.GET["key"] != post_key:
-                #The request has a key but it doesn't match
+                # The request has a key but it doesn't match
                 return HttpResponseForbidden()
         else:
-            #The post key is specified in the settings but not in the URL
+            # The post key is specified in the settings but not in the URL
             return HttpResponseBadRequest()
 
     return True
-
 
 
 @require_POST
@@ -38,25 +38,24 @@ def submit(request):
     if postKeyReturn != True:
         return postKeyReturn
 
-    #Because the post is not indexed we have to check the key
+    # Because the post is not indexed we have to check the key
     if len(unicode(request.body)) == 0:
         return HttpResponseBadRequest()
 
-    #Check if it really json
+    # Check if it really json
     try:
         json_object = json.loads(unicode(request.body))
-    except ValueError, e:
-        #The json is not valid
+    except ValueError as e:
+        # The json is not valid
         return HttpResponseBadRequest()
 
     pat = Patient()
 
     uid = id_generator()
 
-    #Check if the uid exists
-    while Patient.objects.filter(uid__iexact = uid ).count() == 1:
+    # Check if the uid exists
+    while Patient.objects.filter(uid__iexact=uid).count() == 1:
         uid = id_generator()
-
 
     pat.uid = uid
     pat.first_name = json_object.get("first_name") or None
@@ -67,14 +66,14 @@ def submit(request):
 
     pat.json = unicode(json_object)
 
-    #Message is sent through the save method
+    # Message is sent through the save method
     pat.save()
-
 
     return HttpResponse(uid)
 
-#This is the regex that we use to identify a patient
+# This is the regex that we use to identify a patient
 PATIENT_REGEX = "^ *([A-Z0-9]{4}) *$"
+
 
 @require_POST
 @csrf_exempt
@@ -83,9 +82,9 @@ def smswebhook(request):
     This is called by the sms gateway. For now this is rapidpro
     """
 
-    #Check if the number is in the cache
+    # Check if the number is in the cache
     if not cache.get(request.POST["phone"]):
-        #Only allow a call every 10 seconds
+        # Only allow a call every 10 seconds
         cache.set(request.POST["phone"], '', 5)
 
         long_cache_name = "long_%s" % request.POST["phone"]
@@ -108,33 +107,31 @@ def smswebhook(request):
         }
         return HttpResponse(json.dumps(params))
 
-
-
     sms_content = request.POST["text"]
 
     patient_code_regex = re.compile(PATIENT_REGEX)
     patient_codes = patient_code_regex.findall(sms_content)
 
     if len(patient_codes) == 1:
-        #Seams to be a patient reference
+        # Seams to be a patient reference
 
-        if Patient.objects.filter(uid__iexact = sms_content ).count() == 1:
-            pat = Patient.objects.get(uid__iexact = sms_content )
+        if Patient.objects.filter(uid__iexact=sms_content).count() == 1:
+            pat = Patient.objects.get(uid__iexact=sms_content)
 
             if pat.etu:
                 mapping = {
-                    'first_name':pat.first_name,
-                    'second_name':pat.last_name,
-                    'h_facility':pat.etu
+                    'first_name': pat.first_name,
+                    'second_name': pat.last_name,
+                    'h_facility': pat.etu
                 }
 
                 text = wordings.patient_location % mapping
 
                 if pat.status:
                     mapping = {
-                        'first_name':pat.first_name,
-                        'second_name':pat.last_name,
-                        'status':pat.get_status_display()
+                        'first_name': pat.first_name,
+                        'second_name': pat.last_name,
+                        'status': pat.get_status_display()
                     }
 
                     settings.SMS_BACKEND(pat.caregiver_number, wordings.patient_status % mapping)
@@ -157,6 +154,5 @@ def smswebhook(request):
             'phone': request.POST["phone"],
             'text': wordings.invalid_id
         }
-
 
     return HttpResponse(json.dumps(params))
