@@ -15,19 +15,19 @@ router.register(r'patients', PatientViewSet)
 
 urlpatterns = patterns('',
 
-    url(r'^submit$', 'core.views.submit', name='submit'),
+                       url(r'^submit$', 'core.views.submit', name='submit'),
 
-    url(r'^smswebhook$', 'core.views.smswebhook', name='smswebhook'),
+                       url(r'^smswebhook$', 'core.views.smswebhook', name='smswebhook'),
 
-    url(r'^admin/', include(admin.site.urls)),
+                       url(r'^admin/', include(admin.site.urls)),
 
-    # API Routes
-    url(r'^api/', include(router.urls)),
+                       # API Routes
+                       url(r'^api/', include(router.urls)),
 
-    # API Auth Urls
-    url(r'^api-auth/', include('rest_framework.urls',
-        namespace='rest_framework')),
+                       # API Auth Urls
+                       url(r'^api-auth/', include('rest_framework.urls',
+                                                  namespace='rest_framework')),
 
-    # For now we alwys redirect to the admin login
-    url(r'^.*$', RedirectView.as_view(url='admin/', permanent=False), name='index')
-)
+                       # For now we alwys redirect to the admin login
+                       url(r'^.*$', RedirectView.as_view(url='admin/', permanent=False), name='index')
+                       )

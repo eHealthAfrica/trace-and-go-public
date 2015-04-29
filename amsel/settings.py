@@ -1,6 +1,6 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from core.backends import sms_send_telerivet, sms_send_rapidpro
+from core.backends import sms_send_telerivet, sms_send_rapidpro  # noqa
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -15,7 +15,7 @@ STATIC_URL = '/static/'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
-    'django.contrib.staticfiles',    
+    'django.contrib.staticfiles',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -92,10 +92,10 @@ REST_FRAMEWORK = {
 # This is not really security but has become some sort of standard over
 # the years. So if this is specified the post needs to be like:
 # http://URL/submit?key=abc
-#POST_KEY = "abc"
+# POST_KEY = "abc"
 
 
-#Set the backend to send the sms
+# Set the backend to send the sms
 SMS_BACKEND = sms_send_rapidpro
 
 
@@ -108,12 +108,12 @@ TEXTIT_AUT = os.environ.get("TEXTIT_AUT", "!@#THIS_IS_REALLY_SECURE!@#$%")
 
 # Set the auth key for you rapidpro.io account
 # get it under https://rapidpro.io/org/home/
-RAPIDPRO_AUT =  os.environ.get("RAPIDPRO_AUT", "!@#THIS_IS_REALLY_SECURE!@#$%")
+RAPIDPRO_AUT = os.environ.get("RAPIDPRO_AUT", "!@#THIS_IS_REALLY_SECURE!@#$%")
 
-#Telerivet REST API options
+# Telerivet REST API options
 TE_API_KEY = os.environ.get("API_KEY", "!@#THIS_IS_REALLY_SECURE!@#$%")
 TE_PROJECT_ID = os.environ.get("PROJECT_ID", "!@#THIS_IS_REALLY_SECURE!@#$%")
 
-#Twilio REST API options
+# Twilio REST API options
 TW_SID = os.environ.get("TW_SID", "!@#THIS_IS_REALLY_SECURE!@#$%")
-TW_AUTH  = os.environ.get("TW_AUTH", "!@#THIS_IS_REALLY_SECURE!@#$%")
+TW_AUTH = os.environ.get("TW_AUTH", "!@#THIS_IS_REALLY_SECURE!@#$%")
