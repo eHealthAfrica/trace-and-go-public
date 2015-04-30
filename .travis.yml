@@ -8,3 +8,7 @@ install:
 script:
   - flake8 --exclude migrations --ignore E501,C901 ./
   - python manage.py test --noinput
+notifications:
+  slack:
+    rooms:
+      - ehealthafrica:vuLN0Q0ZvYCaYbxCdR0NwKxq#tag-travis
