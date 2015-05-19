@@ -1,3 +1,23 @@
+# Created by https://www.gitignore.io
+
+### Vim ###
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
+
+
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+
+
+### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -8,11 +28,12 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
-bin/
 build/
 develop-eggs/
 dist/
+downloads/
 eggs/
+.eggs/
 lib/
 lib64/
 parts/
@@ -22,6 +43,12 @@ var/
 .installed.cfg
 *.egg
 
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
@@ -30,28 +57,22 @@ pip-delete-this-directory.txt
 htmlcov/
 .tox/
 .coverage
+.coverage.*
 .cache
 nosetests.xml
 coverage.xml
+*,cover
 
 # Translations
 *.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-# Rope
-.ropeproject
+*.pot
 
 # Django stuff:
 *.log
-*.pot
 
 # Sphinx documentation
 docs/_build/
 
-.settings
-db.sqlite3
-.idea
+# PyBuilder
+target/
+
