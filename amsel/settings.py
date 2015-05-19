@@ -4,10 +4,12 @@ from core.backends import sms_send_telerivet, sms_send_rapidpro  # noqa
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Usage MEDIA_ROOT = here('media')
+here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
 
-TEMPLATE_DEBUG = False
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
 
 STATIC_URL = '/static/'
 
@@ -20,7 +22,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
-    'south',
     'core',
     'djrill',
     'rest_framework',
@@ -47,12 +48,17 @@ WSGI_APPLICATION = 'amsel.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tag',
+        'USER': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
-TEMPLATE_DIRS = os.path.join(BASE_DIR, 'templates')
+TEMPLATE_DIRS = (
+    here('templates'),
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -117,3 +123,5 @@ TE_PROJECT_ID = os.environ.get("PROJECT_ID", "!@#THIS_IS_REALLY_SECURE!@#$%")
 # Twilio REST API options
 TW_SID = os.environ.get("TW_SID", "!@#THIS_IS_REALLY_SECURE!@#$%")
 TW_AUTH = os.environ.get("TW_AUTH", "!@#THIS_IS_REALLY_SECURE!@#$%")
+
+from local_settings import *  # noqa
