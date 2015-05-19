@@ -1,3 +1,4 @@
+django-reversion-compare
 Django==1.8.1
 South==1.0
 git+https://github.com/Telerivet/telerivet-python-client.git
@@ -12,3 +13,6 @@ twilio==3.6.10
 wsgiref==0.1.2
 flake8==2.4.0
 psycopg2==2.6
+django-reversion==1.8.6
+diff-match-patch==20110725.1
+
