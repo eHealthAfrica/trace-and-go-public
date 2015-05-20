@@ -45,7 +45,9 @@ ROOT_URLCONF = 'amsel.urls'
 
 WSGI_APPLICATION = 'amsel.wsgi.application'
 
-
+MIGRATION_MODULES = {
+    'organizations': 'amsel.migrations.organizations',
+}
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
