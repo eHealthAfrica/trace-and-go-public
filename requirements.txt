@@ -1,6 +1,7 @@
 django-reversion-compare
 Django==1.8.1
 git+https://github.com/Telerivet/telerivet-python-client.git
+django-extensions==1.5.2
 django-filter==0.10.0
 djangorestframework==3.0.0
 djrill==1.1.1
