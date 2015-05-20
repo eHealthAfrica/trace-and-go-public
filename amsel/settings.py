@@ -27,7 +27,8 @@ INSTALLED_APPS = (
     'core',
     'djrill',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'organizations',
 )
 
 MIDDLEWARE_CLASSES = (
