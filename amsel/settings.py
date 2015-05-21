@@ -24,11 +24,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'reversion',
     'reversion_compare',
-    'core',
     'djrill',
     'rest_framework',
     'rest_framework.authtoken',
     'organizations',
+    'core',
 )
 
 MIDDLEWARE_CLASSES = (

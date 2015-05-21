@@ -106,7 +106,6 @@ class PatientViewSetTests(TestCase):
             "last_name": "Bob",\
             "_uuid": "934dd0ed-a956-4224-a36f-f9c71da5b229",\
             "_bamboo_dataset_id": "",\
-            "enter_number": "12345678",\
             "moh_id": "Tbhi",\
             "_tags": [],\
             "_xform_id_string": "amsel",\
@@ -192,7 +191,6 @@ class PatientViewSetTests(TestCase):
             "uid": "1234",
             "etu": "Test.",
             "age": "27",
-            "enter_number": "+182311121",
             "alive": "false",
             "caregiver_number": "+123111811"
         }
@@ -215,7 +213,6 @@ class PatientViewSetTests(TestCase):
             "uid": "1234",
             "etu": "Test.",
             "moh_id": "123",
-            "enter_number": "+182311121",
             "caregiver_number": "+123111811"
         }
 

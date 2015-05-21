@@ -1,4 +1,4 @@
-patient_info = "The patient %(first_name)s %(second_name)s has the information code %(unfo_code)s"
+patient_info = "The patient %(first_name)s %(second_name)s has the information code %(info_code)s"
 patient_location = "The patient %(first_name)s %(second_name)s is at %(h_facility)s"
 patient_status = "The patient %(first_name)s %(second_name)s is currently %(status)s"
 patient_no_info = "The system has not updated the location of the patient."

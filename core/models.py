@@ -3,23 +3,34 @@ import string
 from amsel import wordings
 from django.conf import settings
 from django.db import models
+from organizations.base import (OrganizationBase, OrganizationUserBase,
+                                OrganizationOwnerBase)
 
 
 def id_generator(size=4, chars=string.ascii_uppercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+class HealthFacility(OrganizationBase):
+    pass
+
+
+class CaseInvestigator(OrganizationUserBase):
+    pass
+
+
+class HealthFacilityAdministrator(OrganizationOwnerBase):
+    pass
+
+
 class Patient(models.Model):
+    info_code = models.CharField(max_length=20, db_index=True, unique=True, default=id_generator)
+    first_name = models.CharField(max_length=250, blank=True)
+    last_name = models.CharField(max_length=250, blank=True)
+    case_id = models.CharField(max_length=250, blank=True)
+    contact_phone_number = models.CharField(max_length=250, blank=True)
 
-    uid = models.CharField(max_length=20, db_index=True, unique=True, default=id_generator)
-    first_name = models.CharField(max_length=250, blank=True, null=True)
-    last_name = models.CharField(max_length=250, blank=True, null=True)
-    moh_id = models.CharField("MOH-ID", max_length=250, blank=True, null=True)
-    enter_name = models.CharField('Case Investigator name', max_length=250, blank=True, null=True)
-    enter_number = models.CharField('Case Investigator number', max_length=250, blank=True, null=True)
-    caregiver_number = models.CharField('Next of kin number', max_length=250, blank=True, null=True)
-
-    etu = models.CharField(max_length=250, blank=True, null=True)
+    health_facility = models.ForeignKey(HealthFacility)
 
     PATIENT_STATUS = (
         ("A", "Just admitted"),
@@ -30,29 +41,29 @@ class Patient(models.Model):
         ("O", "Discharged"),
     )
 
-    status = models.CharField(choices=PATIENT_STATUS, max_length=1, blank=True, null=True)
-
-    json = models.TextField(editable=False)
+    status = models.CharField(choices=PATIENT_STATUS, max_length=1, blank=True)
 
     line_listing = models.TextField(editable=False, blank=True, null=True)
 
+    def __unicode__(self):
+        return u'%s %s %s' % (self.info_code, self.first_name, self.last_name)
+
     def save(self, *args, **kwargs):
-        # Check if the etu field has changed.
-        if self.caregiver_number:
+        if self.contact_phone_number:
 
             if self.pk is not None:
                 oldItem = Patient.objects.get(pk=self.pk)
 
-                if oldItem.etu != self.etu:
-                    # If the etu has changed send out a message to the caregiver
+                if oldItem.health_facility_id != self.health_facility_id:
+                    # If the health facility has changed send out a message to the caregiver
                     mapping = {
                         'first_name': self.first_name,
                         'second_name': self.last_name,
-                        'h_facility': self.etu
+                        'h_facility': self.health_facility
                     }
 
                     text = wordings.patient_location % mapping
-                    settings.SMS_BACKEND(self.caregiver_number, text)
+                    settings.SMS_BACKEND(self.contact_phone_number, text)
 
                 if oldItem.status != self.status:
                     # If the status has changed send out a message to the caregiver
@@ -63,35 +74,32 @@ class Patient(models.Model):
                     }
 
                     text = wordings.patient_status % mapping
-                    settings.SMS_BACKEND(self.caregiver_number, text)
+                    settings.SMS_BACKEND(self.contact_phone_number, text)
 
             else:
                 # Send the text messages
                 mapping = {
                     'first_name': self.first_name,
                     'second_name': self.last_name,
-                    'unfo_code': self.uid
+                    'info_code': self.info_code
                 }
 
                 text = wordings.patient_info % mapping
 
-                if self.enter_number:
-                    settings.SMS_BACKEND(self.enter_number, text)
+                if self.contact_phone_number:
+                    settings.SMS_BACKEND(self.contact_phone_number, text)
 
-                if self.caregiver_number:
-                    settings.SMS_BACKEND(self.caregiver_number, text)
+                settings.SMS_BACKEND(self.contact_phone_number, wordings.initial_message)
 
-                settings.SMS_BACKEND(self.caregiver_number, wordings.initial_message)
-
-                if self.etu:
+                if self.health_facility:
                     mapping = {
                         'first_name': self.first_name,
                         'second_name': self.last_name,
-                        'h_facility': self.etu
+                        'h_facility': self.health_facility
                     }
 
                     text = wordings.patient_location % mapping
-                    settings.SMS_BACKEND(self.caregiver_number, text)
+                    settings.SMS_BACKEND(self.contact_phone_number, text)
 
                 if self.status:
                     mapping = {
@@ -101,6 +109,6 @@ class Patient(models.Model):
                     }
 
                     text = wordings.patient_status % mapping
-                    settings.SMS_BACKEND(self.caregiver_number, text)
+                    settings.SMS_BACKEND(self.contact_phone_number, text)
 
         super(Patient, self).save(*args, **kwargs)  # Call the "real" save() method.
