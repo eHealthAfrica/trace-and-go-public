@@ -61,10 +61,10 @@ TEMPLATE_DIRS = (
     here('templates'),
 )
 
-STATIC_ROOT = here('static_root')
+STATIC_ROOT = here('../static_root')
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = here('media_root')
+MEDIA_ROOT = here('../media_root')
 MEDIA_URL = '/media/'
 
 # Internationalization
