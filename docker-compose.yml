@@ -1,0 +1,9 @@
+db:
+    image: "postgres:9.4"
+    net: "host"
+web:
+  build: .
+  volumes:
+   - .:/opt/tag/
+   - ~/.ssh/:/root/.ssh
+  net: "host"

@@ -11,7 +11,6 @@ here = lambda x: os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-STATIC_URL = '/static/'
 
 # Application definition
 
@@ -61,6 +60,12 @@ DATABASES = {
 TEMPLATE_DIRS = (
     here('templates'),
 )
+
+STATIC_ROOT = here('static_root')
+STATIC_URL = '/static/'
+
+MEDIA_ROOT = here('media_root')
+MEDIA_URL = '/media/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
