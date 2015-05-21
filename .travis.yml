@@ -9,9 +9,8 @@ install:
   - pip install flake8
   - pip install -r requirements.txt
   - touch amsel/local_settings.py
-  - python manage.py syncdb --noinput
-  - python manage.py migrate --noinput
 script:
+  - python manage.py syncdb --noinput
   - flake8 --exclude migrations --ignore E501,C901 ./
   - python manage.py test --noinput
 notifications:
