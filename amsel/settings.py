@@ -23,10 +23,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'reversion',
     'reversion_compare',
-    'core',
     'djrill',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'core',
+    'django_extensions',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -42,7 +43,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'amsel.urls'
 
 WSGI_APPLICATION = 'amsel.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
