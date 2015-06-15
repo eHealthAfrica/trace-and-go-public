@@ -21,6 +21,8 @@ After you have all the tool dependencies installed for your respective OS, move 
     $ git clone <thisrepo>
     $ cd <thisrepo>
 
+Make your `/amsel/local_settings.py` file with at least `DEBUG=True` in it
+
 ## In tab 2 start the db
 NOTE: when this session is stopped, the data will be lose.
 
