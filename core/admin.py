@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
 import reversion
 
 from models import Patient, HealthFacility, CaseInvestigator
@@ -35,11 +34,5 @@ class CaseInvestigatorAdmin(reversion.VersionAdmin):
 
 
 admin.site.register(Patient, PatientAdmin)
-
-#admin.site.unregister(Organization)
-#admin.site.unregister(OrganizationUser)
-#admin.site.unregister(OrganizationOwner)
-
-
 admin.site.register(HealthFacility, HealthFacilityAdmin)
 admin.site.register(CaseInvestigator, CaseInvestigatorAdmin)

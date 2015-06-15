@@ -189,5 +189,3 @@ def my_handler(sender, instance, **kwargs):
     instance.user.groups.add(group)
     instance.user.is_staff = True
     instance.user.save()
-
-
