@@ -22,6 +22,7 @@ After you have all the tool dependencies installed for your respective OS, move 
     $ cd <thisrepo>
 
 ## In tab 2 start the db
+NOTE: when this session is stopped, the data will be lose.
 
     $ sudo docker-compose run db
 
@@ -31,6 +32,7 @@ After you have all the tool dependencies installed for your respective OS, move 
 
 Now within the docker container as root
 
+    # createdb -h localhost -U postgres tag
     # /opt/tag/manage.py migrate
     # /opt/tag/manage.py runserver 0.0.0.0:8000
 
