@@ -1,33 +1,40 @@
-Running the code currently requrires a few libraries and services.
+# Install with Docker
 
-First set up your local env.
+Install [Docker](https://docs.docker.com/installation/#installation)
+
+### On Mac OS X
+
+- Install [Bower](http://bower.io)
+- Install [Homebrew](http://brew.sh)
+- Install Docker Compose `$ brew install docker-compose`
+
+### On Ubuntu
+
+- Install Python's PIP and npm/nodejs `$ sudo apt-get install python-pip npm nodejs-legacy`
+- Install Bower `$ sudo npm install -g bower`
+- Install Docker Compose `$ sudo pip install -U docker-compose`
+
+After you have all the tool dependencies installed for your respective OS, move onto install the app.
+
+## In tab 1
 
     $ git clone <thisrepo>
     $ cd <thisrepo>
-    $ virtualenv env
-    $ source env/bin/activate
-    $ pip install -r requirements.txt
-    $ ./manage syncdb
-    $ ./manage migratedb
-    $ ./manage runserver
-    
-You might have to tunnel the requests to your local dev server through ssh. If you are using a formhub that is not local.
 
-    $ ssh -R \*:8000:localhost:8000 yourserver.com
-    
-normally does the trick.
+Make your `/amsel/local_settings.py` file with at least `DEBUG=True` in it
 
-Then upload the form to formhub and set the webook to 
+## In tab 2 start the db
+NOTE: when this session is stopped, the data will be lose.
 
-    https://yourserver.com/submit
-    
-once this is done you should be able to submit stuff through formhub and see the data under:
+    $ sudo docker-compose run db
 
-    127.0.0.1:8000/admin/
-    
-We will have to figure out how to share the flows in https://rapidpro.io/flow/
+## In tab 1 again start the webserver
 
-    
-    
-    
-    
+    $ sudo docker-compose run web bash
+
+Now within the docker container as root
+
+    # createdb -h localhost -U postgres tag
+    # /opt/tag/manage.py migrate
+    # /opt/tag/manage.py runserver 0.0.0.0:8000
+
