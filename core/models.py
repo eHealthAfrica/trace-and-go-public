@@ -185,7 +185,7 @@ from django.contrib.auth.models import Group
 
 @receiver(pre_save, sender=CaseInvestigator)
 def my_handler(sender, instance, **kwargs):
-    group = Group.objects.get(name='Case Investigators')
+    group = Group.objects.get(id=settings.HEALTH_WORKER_GROUP_ID)
     instance.user.groups.add(group)
     instance.user.is_staff = True
     instance.user.save()
