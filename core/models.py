@@ -27,7 +27,7 @@ class HealthFacility(TimeStampedModel):
         Adds a new user and if the first user makes the user an admin and
         the owner.
         """
-        users_count = self.users.all().count()
+        users_count = self.caseinvestigator_set.all().count()
         if users_count == 0:
             is_admin = True
         # TODO get specific org user?
