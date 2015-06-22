@@ -1,6 +1,10 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from core.backends import sms_send_telerivet, sms_send_rapidpro  # noqa
+import djcelery
+djcelery.setup_loader()
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+BROKER_URL = 'amqp://guest:guest@localhost:5672//'
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -28,6 +32,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'core',
     'django_extensions',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -109,7 +114,7 @@ REST_FRAMEWORK = {
 
 
 # Set the backend to send the sms
-SMS_BACKEND = sms_send_rapidpro
+SMS_BACKEND = 'core.backends.sms_send_rapidpro'
 
 
 COUNTRY_CODE = os.environ.get("COUNTRY_CODE", None)

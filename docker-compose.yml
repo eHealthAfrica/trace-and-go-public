@@ -6,3 +6,9 @@ web:
   volumes:
    - .:/opt/tag/
   net: "host"
+rabbitmq:
+    image: "docker"
+    net: "host"
+    ports:
+     - "5672:5672"
+     - "15672:15672"

@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from organizations.models import (TimeStampedModel, SlugField)
 from django.utils.translation import ugettext_lazy as _
+from core import tasks
 
 
 def id_generator(size=4, chars=string.ascii_uppercase + string.digits):
@@ -125,7 +126,7 @@ class Patient(models.Model):
                     }
 
                     text = wordings.patient_location % mapping
-                    settings.SMS_BACKEND(self.contact_phone_number, text)
+                    tasks.send_sms.delay(self.contact_phone_number, text)
 
                 if oldItem.status != self.status:
                     # If the status has changed send out a message to the caregiver
@@ -136,7 +137,7 @@ class Patient(models.Model):
                     }
 
                     text = wordings.patient_status % mapping
-                    settings.SMS_BACKEND(self.contact_phone_number, text)
+                    tasks.send_sms.delay(self.contact_phone_number, text)
 
             else:
                 # Send the text messages
@@ -149,9 +150,9 @@ class Patient(models.Model):
                 text = wordings.patient_info % mapping
 
                 if self.contact_phone_number:
-                    settings.SMS_BACKEND(self.contact_phone_number, text)
+                    tasks.send_sms.delay(self.contact_phone_number, text)
 
-                settings.SMS_BACKEND(self.contact_phone_number, wordings.initial_message)
+                tasks.send_sms.delay(self.contact_phone_number, wordings.initial_message)
 
                 if self.health_facility:
                     mapping = {
@@ -161,7 +162,7 @@ class Patient(models.Model):
                     }
 
                     text = wordings.patient_location % mapping
-                    settings.SMS_BACKEND(self.contact_phone_number, text)
+                    tasks.send_sms.delay(self.contact_phone_number, text)
 
                 if self.status:
                     mapping = {
@@ -171,7 +172,7 @@ class Patient(models.Model):
                     }
 
                     text = wordings.patient_status % mapping
-                    settings.SMS_BACKEND(self.contact_phone_number, text)
+                    tasks.send_sms.delay(self.contact_phone_number, text)
 
         super(Patient, self).save(*args, **kwargs)  # Call the "real" save() method.
 
