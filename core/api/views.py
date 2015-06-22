@@ -12,6 +12,7 @@ from core.api.serializers import (
     CaseInvestigatorSerializer,
     )
 
+
 class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
@@ -19,9 +20,11 @@ class PatientViewSet(viewsets.ModelViewSet):
     filter_fields = ('first_name', 'last_name')
     search_fields = ('first_name', 'last_name')
 
+
 class HealthFacilityViewSet(viewsets.ModelViewSet):
     queryset = HealthFacility.objects.all()
     serializer_class = HealthFacilitySerializer
+
 
 class CaseInvestigatorViewSet(viewsets.ModelViewSet):
     queryset = CaseInvestigator.objects.all()
