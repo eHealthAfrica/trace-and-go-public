@@ -7,11 +7,16 @@ admin.autodiscover()
 
 from rest_framework import routers
 
-from core.api.views import PatientViewSet
+from core.api.views import (
+    PatientViewSet,
+    HealthFacilityViewSet,
+    CaseInvestigatorViewSet,
+)
 
 router = routers.DefaultRouter()
 router.register(r'patients', PatientViewSet)
-
+router.register(r'health-facilities', HealthFacilityViewSet)
+router.register(r'case-investigators', CaseInvestigatorViewSet)
 
 urlpatterns = patterns('',
 
