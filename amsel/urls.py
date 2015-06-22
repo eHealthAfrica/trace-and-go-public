@@ -15,8 +15,8 @@ from core.api.views import (
 
 router = routers.DefaultRouter()
 router.register(r'patients', PatientViewSet)
-router.register(r'healthfacility', HealthFacilityViewSet)
-router.register(r'caseinvestigator', CaseInvestigatorViewSet)
+router.register(r'health-facilities', HealthFacilityViewSet)
+router.register(r'case-investigators', CaseInvestigatorViewSet)
 
 urlpatterns = patterns('',
 
