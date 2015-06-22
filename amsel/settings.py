@@ -132,4 +132,7 @@ TE_PROJECT_ID = os.environ.get("PROJECT_ID", "!@#THIS_IS_REALLY_SECURE!@#$%")
 TW_SID = os.environ.get("TW_SID", "!@#THIS_IS_REALLY_SECURE!@#$%")
 TW_AUTH = os.environ.get("TW_AUTH", "!@#THIS_IS_REALLY_SECURE!@#$%")
 
+HEALTH_WORKER_GROUP_ID = 1  # Set this once and don't change it.
+
+
 from local_settings import *  # noqa

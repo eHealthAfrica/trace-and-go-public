@@ -1,0 +1,46 @@
+[
+{
+  "fields": {
+    "name": "Health Worker",
+    "permissions": [
+      [
+        "add_caseinvestigator",
+        "core",
+        "caseinvestigator"
+      ],
+      [
+        "change_caseinvestigator",
+        "core",
+        "caseinvestigator"
+      ],
+      [
+        "delete_caseinvestigator",
+        "core",
+        "caseinvestigator"
+      ],
+      [
+        "change_healthfacility",
+        "core",
+        "healthfacility"
+      ],
+      [
+        "add_patient",
+        "core",
+        "patient"
+      ],
+      [
+        "change_patient",
+        "core",
+        "patient"
+      ],
+      [
+        "delete_patient",
+        "core",
+        "patient"
+      ]
+    ]
+  },
+  "model": "auth.group",
+  "pk": 1
+}
+]
