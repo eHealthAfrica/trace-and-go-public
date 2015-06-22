@@ -4,7 +4,7 @@ from core.models import (
     Patient,
     HealthFacility,
     CaseInvestigator,
-    )
+)
 
 
 class UserSerializer(serializers.Serializer):

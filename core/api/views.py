@@ -5,12 +5,12 @@ from core.models import (
     Patient,
     HealthFacility,
     CaseInvestigator,
-    )
+)
 from core.api.serializers import (
     PatientSerializer,
     HealthFacilitySerializer,
     CaseInvestigatorSerializer,
-    )
+)
 
 
 class PatientViewSet(viewsets.ModelViewSet):

@@ -11,7 +11,7 @@ from core.api.views import (
     PatientViewSet,
     HealthFacilityViewSet,
     CaseInvestigatorViewSet,
-    )
+)
 
 router = routers.DefaultRouter()
 router.register(r'patients', PatientViewSet)

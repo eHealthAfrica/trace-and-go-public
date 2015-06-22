@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 
 from core.models import (
-    Patient,
     HealthFacility,
     CaseInvestigator,
-    )
+)
+
 
 class TestHealthFacilityModel(APITestCase):
 
@@ -24,7 +24,7 @@ class TestHealthFacilityModel(APITestCase):
         health_facility, user = (
             self.create_health_facility(),
             self.create_user(),
-            )
+        )
         case_investigator = CaseInvestigator.objects.create(
             user=user,
             health_facility=health_facility,
@@ -39,11 +39,10 @@ class TestHealthFacilityModel(APITestCase):
         health_facility, user = (
             self.create_health_facility(),
             self.create_user(),
-            )
+        )
         self.assertEqual(health_facility.caseinvestigator_set.count(), 0)
 
         health_facility.add_user(user)
         self.assertEqual(health_facility.caseinvestigator_set.count(), 1)
         self.assertEqual(health_facility.caseinvestigator_set.first().user, user)
         self.assertIsInstance(health_facility.caseinvestigator_set.first(), CaseInvestigator)
-
