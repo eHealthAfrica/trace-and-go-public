@@ -7,6 +7,11 @@ from core.models import (
     )
 
 
+class UserSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    username = serializers.CharField(max_length=100)
+
+
 class PatientSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -20,6 +25,8 @@ class HealthFacilitySerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CaseInvestigatorSerializer(serializers.HyperlinkedModelSerializer):
+
+    user = UserSerializer()
 
     class Meta:
         model = CaseInvestigator
