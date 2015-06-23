@@ -1,8 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.html import escape
-
 import phonenumbers
-
 import json
 import requests
 

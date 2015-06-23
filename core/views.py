@@ -8,6 +8,7 @@ import json
 from django.core.cache import cache
 from models import Patient
 import re
+from core import tasks
 
 
 def check_post_key(request):
@@ -133,7 +134,7 @@ def smswebhook(request):
                         'status': pat.get_status_display()
                     }
 
-                    settings.SMS_BACKEND(pat.caregiver_number, wordings.patient_status % mapping)
+                    tasks.send_sms.delay(pat.caregiver_number, wordings.patient_status % mapping)
 
             else:
                 text = wordings.patient_no_info

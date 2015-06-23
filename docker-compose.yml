@@ -1,8 +1,23 @@
 db:
     image: "postgres:9.4"
     net: "host"
+
 web:
   build: .
   volumes:
    - .:/opt/tag/
   net: "host"
+
+celery:
+  build: .
+  volumes:
+   - .:/opt/tag/
+  net: "host"
+  command:  bash -c "C_FORCE_ROOT=1  /opt/tag/manage.py celery -A core worker -l info -n tag-worker.%h"
+
+rabbitmq:
+    image: "rabbitmq"
+    net: "host"
+    ports:
+     - "5672:5672"
+     - "15672:15672"

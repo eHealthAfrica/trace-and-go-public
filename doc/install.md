@@ -26,7 +26,10 @@ Make your `/amsel/local_settings.py` file with at least `DEBUG=True` in it
 ## In tab 2 start the db
 NOTE: when this session is stopped, the data will be lose.
 
-    $ sudo docker-compose run db
+    $ sudo docker-compose up db
+
+## In tab 3 start the celery worker
+    $ sudo docker-compose up rabbitmq celery
 
 ## In tab 1 again start the webserver
 
