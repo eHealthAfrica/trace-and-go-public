@@ -24,8 +24,7 @@ class HealthFacility(TimeStampedModel):
 
     def add_user(self, user, is_admin=False):
         """
-        Adds a new user and if the first user makes the user an admin and
-        the owner.
+        Adds a new user and if the first user makes the user an admin
         """
         users_count = self.caseinvestigator_set.all().count()
         if users_count == 0:
@@ -64,18 +63,11 @@ class HealthFacility(TimeStampedModel):
 
         return org_user, created
 
-    def change_owner(self, new_owner):
-        """
-        Changes ownership of an health_facility.
-        """
-        self.owner.case_investigator = new_owner
-        self.owner.save()
-
     def is_admin(self, user):
         """
         Returns True is user is an admin in the health_facility, otherwise false
         """
-        return True if self.case_investigators.filter(user=user, is_admin=True) else False
+        return True if self.caseinvestigator_set.filter(user=user, is_admin=True) else False
 
 
 class CaseInvestigator(TimeStampedModel):
