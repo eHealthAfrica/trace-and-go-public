@@ -64,7 +64,7 @@ DATABASES = {
 }
 
 TEMPLATE_DIRS = (
-    here('templates'),
+    here('../templates'),
 )
 
 STATIC_ROOT = here('../static_root')

@@ -11,7 +11,6 @@ class PatientAdmin(reversion.VersionAdmin):
     raw_id_fields = ('health_facility',)
 
     def get_queryset(self, request):
-
         qs = super(PatientAdmin, self).get_queryset(request)
         if not request.user.is_superuser:
             qs = qs.filter(health_facility__caseinvestigator__user=request.user).distinct()
