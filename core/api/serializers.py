@@ -42,7 +42,9 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
     health_facility_id = serializers.PrimaryKeyRelatedField(read_only=False, source='health_facility', queryset=HealthFacility.objects.all())
     health_facility_url = serializers.HyperlinkedRelatedField(view_name='healthfacility-detail', read_only=True, source='health_facility')
     health_facility = HealthFacilitySerializer(read_only=True)
+
     class Meta:
+        fields = ('url', 'health_facility_id', 'health_facility_url', 'health_facility', 'info_code', 'first_name', 'last_name', 'case_id', 'contact_phone_number', 'status', 'get_status_display', 'line_listing')
         model = Patient
 
 
