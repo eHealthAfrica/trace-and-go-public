@@ -1,1 +1,23 @@
-hi
+<html>
+  {{ request.user.username }}
+  {% with request.user.caseinvestigator_set.all as cis %}
+  <ul>
+    {% for ci in cis %}
+      {% with ci.health_facility as hf %}
+      <li>{{ hf.name }} <br>
+      Patients:
+      <ul>
+        {% for p in hf.patient_set.all %}
+        <li>
+        First name: {{ p.first_name }}<br>
+        Last {{ p.last_name }} <br>
+        Status: {{ p.get_status_display }}
+        </li>
+        {% endfor %}
+      </ul>
+      </li>
+        {% endwith %}
+    {% endfor %}
+  </ul>
+  {% endwith %}
+</html>
