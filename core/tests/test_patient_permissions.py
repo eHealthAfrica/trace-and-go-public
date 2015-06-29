@@ -12,7 +12,7 @@ from core.models import (
 
 class TestPatientPermissions(APITestCase):
 
-    fixtures = ['initial_data.json']
+    fixtures = ['groups.json']
     allowed_user_username = 'test-user-1'
     allowed_user_password = 'password'
 

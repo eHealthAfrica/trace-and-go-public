@@ -12,7 +12,7 @@ from core.models import (
 
 class TestHealthFacilityModel(APITestCase):
 
-    fixtures = ['initial_data.json']
+    fixtures = ['groups.json']
 
     def create_health_facility(self):
         return HealthFacility.objects.create(name='Lund University Hospital')
