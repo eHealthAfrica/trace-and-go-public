@@ -7,6 +7,7 @@ Install [Docker](https://docs.docker.com/installation/#installation)
 - Install [Bower](http://bower.io)
 - Install [Homebrew](http://brew.sh)
 - Install Docker Compose `$ brew install docker-compose`
+- Install [boot2docker](http://boot2docker.io) and run `boot2docker init` from your CLI
 
 ### On Ubuntu
 
@@ -15,6 +16,8 @@ Install [Docker](https://docs.docker.com/installation/#installation)
 - Install Docker Compose `$ sudo pip install -U docker-compose`
 
 After you have all the tool dependencies installed for your respective OS, move onto install the app.
+
+* If on Mac OS you need to run `boot2docker up`
 
 ## In tab 1
 
