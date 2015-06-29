@@ -1,1 +1,85 @@
-hi
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}{{ title }} | {% trans 'Trace & Go' %}{% endblock %}</title>
+
+    <link rel="icon" href="/images/favicon.ico">
+
+    <!-- Bootstrap core CSS -->
+    <link href="http://ehealthafrica.github.io/ehealth-bootstrap/default/bootstrap.css" rel="stylesheet">
+
+    <!-- Bootstrap theme -->
+    <link href="http://ehealthafrica.github.io/ehealth-bootstrap/default/bootstrap-ehealth.css" rel="stylesheet">
+
+    <!-- Styleguide CSS -->
+
+    <link href="http://ehealthafrica.github.io/css/font-awesome.css" rel="stylesheet">
+    <link href="http://ehealthafrica.github.io/css/styleguide.css" rel="stylesheet">
+
+    {% load staticfiles %}
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-call-center navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+            <img src="{% static "images/app-tag-32.png" %}">
+            <span>Trace & Go</span>
+          </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="#">
+                Hi, Brennan Novak <span class="caret"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row wrapper">
+
+        <div class="col-sm-4 col-md-3 sidebar">
+          <a href="#" class="btn btn-primary btn-block btn-lg">
+            <span class="fa fa-plus"></span> Add Patient
+          </a>
+          <a href="#" class="btn btn-primary btn-block btn-lg">
+            <span class="fa fa-hospital-o"></span> Health Facilities
+          </a>
+        </div>
+
+        <div class="col-sm-8 col-md-9 main">
+
+          {% block content %}{% endblock %}
+
+        </div>
+
+      </div>
+    </div>
+
+    
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/jquery.min.js"></script>
+    <script src="http://ehealthafrica.github.io/ehealth-bootstrap/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/ie10-viewport-bug-workaround.js"></script>
+
+  </body>
+
+</html>
