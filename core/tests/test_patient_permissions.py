@@ -31,6 +31,11 @@ class TestPatientPermissions(APITestCase):
         self.patient = Patient(health_facility=self.health_facility)
         self.patient.save()
 
+    def get_response_results_tuple(self, url):
+        response = self.client.get(url)
+        results = response.data.get('results', None)
+        return (response, results)
+
     def test_permissions_user_in_same_HF_can_view(self):
         """
         Assert that Patients in one HealthFacility are visible to
@@ -45,14 +50,19 @@ class TestPatientPermissions(APITestCase):
         #     client.get(reverse('patient-list'))
         #
         # throws a TemplateDoesNotExist error.
-        response = self.client.get('/patients/.json')
+        # response = self.client.get('/patients/.json')
+        # results = response.data['results']
+        response, results = self.get_response_results_tuple('/patients/.json')
         # Our first user belongs to the same HealthFacility as the Patient does.
         # Hence, the retrieved list should include the the patient just created.
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data[0]['info_code'], self.patient.info_code)
+        self.assertEqual(
+            results[0]['info_code'],
+            self.patient.info_code,
+        )
 
-        response = self.client.get('/health-facilities/.json')
-        self.assertEqual(len(response.data), 1)
+        _, results = self.get_response_results_tuple('/health-facilities/.json')
+        self.assertEqual(len(results), 1)
 
     def test_permissions_user_in_other_HF_can_not_view(self):
         """
@@ -69,12 +79,12 @@ class TestPatientPermissions(APITestCase):
         )
         self.client.login(username='test-user-2', password='password')
 
-        response = self.client.get('/patients/.json')
+        response, results = self.get_response_results_tuple('/patients/.json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(len(results), 0)
 
-        response = self.client.get('/health-facilities/.json')
-        self.assertEqual(len(response.data), 1)
+        _, results = self.get_response_results_tuple('/health-facilities/.json')
+        self.assertEqual(len(results), 1)
 
     def test_permissions_superuser(self):
         """
@@ -83,5 +93,5 @@ class TestPatientPermissions(APITestCase):
         User.objects.create_superuser(
             'superuser', 'hello@example.com', 'password')
         self.client.login(username='superuser', password='password')
-        response = self.client.get('/health-facilities/.json')
-        self.assertEqual(len(response.data), 1)
+        _, results = self.get_response_results_tuple('/health-facilities/.json')
+        self.assertEqual(len(results), 1)
