@@ -54,5 +54,5 @@ class CaseInvestigatorSerializer(DynamicFieldsModelSerializer, serializers.Hyper
 
     class Meta:
         model = CaseInvestigator
-        #fields = ['user']
+        # fields = ['user']
         read_only_fields = ['is_admin', 'health_facility']
