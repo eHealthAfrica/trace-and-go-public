@@ -45,21 +45,21 @@ class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         if request.accepted_renderer.format == 'html':
-            return Response({'data': instance})
+            return Response({'data': serializer.data})
         return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         paginator = pagination.PageNumberPagination()
         page = paginator.paginate_queryset(queryset, request)
+        serializer = PatientSerializer(page, many=True, context={'request': request})
         if request.accepted_renderer.format == 'html':
             return Response({
-                'data': page,
+                'data': serializer.data,
                 'next': paginator.get_next_link(),
                 'previous': paginator.get_previous_link(),
                 'page_number': paginator.page.number,
             })
-        serializer = PatientSerializer(page, many=True, context={'request': request})
         return paginator.get_paginated_response(serializer.data)
 
 
