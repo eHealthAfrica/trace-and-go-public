@@ -19,7 +19,8 @@ urlpatterns = patterns('',
                        url(r'^smswebhook$', 'core.views.smswebhook', name='smswebhook'),
                        url(r'^admin/', include(admin.site.urls)),
                        # API Routes
-                       url(r'^', include(router.urls)),
+                       url(r'^', include(router.urls), ),
+                       url(r'^v1/', include(router.urls, namespace='v1')),
                        # API Auth Urls
                        url(r'^api-auth/', include('rest_framework.urls',
                                                   namespace='rest_framework')),

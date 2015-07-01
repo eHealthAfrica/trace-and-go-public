@@ -45,14 +45,18 @@ class IsHFAmdminOrReadOnly(permissions.BasePermission):
     Assumes the model instance has an `owner` attribute.
     """
 
-    def has_object_permission(self, request, view, health_facility):
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
-        if request.method in permissions.SAFE_METHODS:
-            return True
+    def has_permission(self, request, view):
+        if request.method == 'POST':
+            return request.user.is_superuser
+        return request.user.is_authenticated()
 
-        # Instance must have an attribute named `owner`.
+    def has_object_permission(self, request, view, health_facility):
         return health_facility.is_admin(request.user)
+
+
+class ReadOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        return request.method in permissions.SAFE_METHODS
 
 
 class HealthFacilityViewSet(TemplateNameMixin, viewsets.ModelViewSet):
@@ -69,6 +73,7 @@ class HealthFacilityViewSet(TemplateNameMixin, viewsets.ModelViewSet):
 
 class CaseInvestigatorViewSet(TemplateNameMixin, viewsets.ModelViewSet):
     serializer_class = CaseInvestigatorSerializer
+    permission_classes = (ReadOnly,)
 
     def get_queryset(self):
         request = self.request
