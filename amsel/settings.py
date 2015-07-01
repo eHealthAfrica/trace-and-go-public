@@ -87,7 +87,7 @@ TEMPLATES = [
 
 STATIC_ROOT = here('../static_root')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( 
+STATICFILES_DIRS = (
     here('../static'),
 )
 
