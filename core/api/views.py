@@ -1,6 +1,9 @@
 from rest_framework import viewsets
 from rest_framework import filters
 from rest_framework import permissions
+from rest_framework import pagination
+from rest_framework.response import Response
+
 from django.db.models import Q
 
 from core.models import (
@@ -37,6 +40,27 @@ class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
         if request.user.is_superuser:
             qs = Patient.objects.all()
         return qs
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        if request.accepted_renderer.format == 'html':
+            return Response({'data': instance})
+        return Response(serializer.data)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        paginator = pagination.PageNumberPagination()
+        page = paginator.paginate_queryset(queryset, request)
+        if request.accepted_renderer.format == 'html':
+            return Response({
+                'data': page,
+                'next': paginator.get_next_link(),
+                'previous': paginator.get_previous_link(),
+                'page_number': paginator.page.number,
+            })
+        serializer = PatientSerializer(page, many=True, context={'request': request})
+        return paginator.get_paginated_response(serializer.data)
 
 
 class IsHFAmdminOrReadOnly(permissions.BasePermission):
