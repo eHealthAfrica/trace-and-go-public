@@ -28,65 +28,22 @@
     </div>
 
     <table class="table table-boxed">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Info Code</th>
-        <th>Health Facility</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-      <tr>
-        <td>Jackie De La Lou</td>
-        <td>F32K8</td>
-        <td>Savana Circle Park</td>
-      </tr>
-    </tbody>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Info Code</th>
+          <th>Health Facility</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for patient in data %}
+        <tr>
+          <td><a href="{{patient.url}}">{{patient.first_name}} {{patient.last_name}}</a></td>
+          <td>{{patient.info_code}}</td>
+          <td><a href="">{{patient.health_facility}}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>          
 
     <nav class="pull-right">
