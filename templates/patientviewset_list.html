@@ -40,7 +40,7 @@
         <tr>
           <td><a href="{{patient.url}}">{{patient.first_name}} {{patient.last_name}}</a></td>
           <td>{{patient.info_code}}</td>
-          <td><a href="">{{patient.health_facility}}</a></td>
+          <td><a href="{{patient.health_facility.url}}">{{patient.health_facility.name}}</a></td>
         </tr>
         {% endfor %}
       </tbody>
