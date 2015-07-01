@@ -52,7 +52,7 @@ class CaseInvestigatorAdmin(reversion.VersionAdmin):
             qs = qs.filter(Q(health_facility__caseinvestigator__user=request.user)).distinct()
         return qs
 
-
+admin.site.site_header = 'Trace-And-Go'
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(HealthFacility, HealthFacilityAdmin)
 admin.site.register(CaseInvestigator, CaseInvestigatorAdmin)
