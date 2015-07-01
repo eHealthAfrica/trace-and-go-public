@@ -38,7 +38,7 @@ NOTE: when this session is stopped, the data will be lose.
 
     $ sudo docker-compose run web bash
 
-*On some sytems (MacOS for instance) you need to press enter after this command to actually be dropped into the docker shell 
+*On some sytems (MacOS for instance) you need to press enter after this command to actually be dropped into the docker shell*
 
 Now within the docker container as root
 
@@ -48,6 +48,12 @@ Now within the docker container as root
     # /opt/tag/manage.py loaddata /opt/tag/core/fixtures/groups.json
     # /opt/tag/manage.py runserver 0.0.0.0:8090
     
-*If you're running this in a VirtualBox (MacOS), you will need to access this via the local IP of your Docker instance. This is specified when you first run `boot2docker start` and looks something like `192.168.59.103:2376` but be sure to change that port from `2376` to the one your python server is running at, in this case `8090`
+*If you're running this in a VirtualBox (MacOS), you will need to access this via the local IP of your Docker instance. This is specified when you first run `boot2docker start` and looks something like `192.168.59.103:2376` but be sure to change that port from `2376` to the one your python server is running at, in this case `8090`*
 
 
+## Updating & New Dependencies
+
+If new dependencies are added to the app, you need to do one of two things to install them:
+
+- Stop your server, exit web bash, and then run `boot2docker poweroff`then restart with `up` argument
+- From within web bash, run `pip install -r requirements.txt`
