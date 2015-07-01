@@ -63,9 +63,27 @@ DATABASES = {
     }
 }
 
-TEMPLATE_DIRS = (
-    here('../templates'),
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'DIRS': [
+            here('../templates'),
+        ],
+        'OPTIONS': {
+            'context_processors': ("django.contrib.auth.context_processors.auth",
+                                   "django.template.context_processors.debug",
+                                   "django.template.context_processors.i18n",
+                                   "django.template.context_processors.media",
+                                   "django.template.context_processors.static",
+                                   "django.template.context_processors.tz",
+                                   "django.contrib.messages.context_processors.messages",
+                                   'django.core.context_processors.request',
+                                   )
+
+        }
+    },
+]
 
 STATIC_ROOT = here('../static_root')
 STATIC_URL = '/static/'
@@ -96,6 +114,7 @@ ALLOWED_HOSTS = []
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.TemplateHTMLRenderer',
         'rest_framework.renderers.JSONRenderer',
@@ -108,7 +127,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ),
-    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
 }
 
 # This is a key that needs to be appended to the url when posting
