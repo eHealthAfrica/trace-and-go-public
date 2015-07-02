@@ -1,5 +1,8 @@
 from rest_framework import serializers
+from reversion.helpers import generate_patch_html
+from reversion.helpers import generate_patch
 
+import reversion
 from core.models import (
     Patient,
     HealthFacility,
@@ -42,9 +45,28 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
     health_facility_id = serializers.PrimaryKeyRelatedField(read_only=False, source='health_facility', queryset=HealthFacility.objects.all())
     health_facility_url = serializers.HyperlinkedRelatedField(view_name='healthfacility-detail', read_only=True, source='health_facility')
     health_facility = HealthFacilitySerializer(read_only=True)
+    revisions = serializers.SerializerMethodField()
+
+    def get_revisions(self, obj):
+        reversions = list(reversion.get_for_object(obj))
+        zipped_reversions = zip(reversions + [None], [None] + reversions)[1:-1]
+        results = []
+        for new, old in zipped_reversions:
+            diff = []
+            for field_name in new.field_dict.keys():
+                if generate_patch(old, new, field_name):
+                    diff += [(field_name, generate_patch_html(old, new, field_name))]
+            results += [{
+                'user': UserSerializer(new.revision.user).data,
+                'revision': new.field_dict,
+                'timestamp': new.revision.date_created,
+                'diff': dict(diff),
+            }]
+
+        return results
 
     class Meta:
-        fields = ('url', 'health_facility_id', 'health_facility_url', 'health_facility', 'info_code', 'first_name', 'last_name', 'case_id', 'contact_phone_number', 'status', 'get_status_display', 'line_listing')
+        fields = ('url', 'health_facility_id', 'health_facility_url', 'health_facility', 'info_code', 'first_name', 'last_name', 'case_id', 'contact_phone_number', 'status', 'get_status_display', 'line_listing', 'revisions')
         model = Patient
 
 

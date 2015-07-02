@@ -18,7 +18,7 @@
     <div class="col-md-12">
 
       <h3>Patient Status</h3>
-      <label> 
+      <label>
         <input type="radio" name="status" value="{{data.status}}"> {{data.get_status_display}}
       </label>
 
@@ -87,21 +87,22 @@
     <div class="col-md-12">
       <h3>Status Notifications</h3>
       <ul class="list-group">
-        <li class="list-group-item">
-          Brandon Lewelynberry changed patient status to doctor contacting on June 6, 2015
-        </li>
-        <li class="list-group-item">
-          Brandon Lewelynberry changed patient status to doctor contacting on June 6, 2015
-        </li>
-        <li class="list-group-item">
-          Brandon Lewelynberry changed patient status to doctor contacting on June 6, 2015
-        </li>
-        <li class="list-group-item">
-          Brandon Lewelynberry changed patient status to doctor contacting on June 6, 2015
-        </li>
-        <li class="list-group-item">
-          Brandon Lewelynberry changed patient status to doctor contacting on June 6, 2015
-        </li>
+        {% for r in revisions %}
+          <li class="list-group-item">
+          {{ r.user.username }} changed
+          {% for k, v in r.diff.items %}
+            {% if k == 'first_name' %}first name
+            {% elif k == 'last_name' %}last name
+            {% elif k == 'contact_phone_number' %}phone
+            {% elif k == 'case_id' %}case ID
+            {% elif k == 'health_facility' %}health facility
+            {% elif k == 'status' %}status
+            {% endif %}:
+            {{ v | safe}}
+          {% endfor %}
+          {{ r.timestamp | timesince}}
+          </li>
+        {% endfor %}
       </ul>
     </div>
   </div>
