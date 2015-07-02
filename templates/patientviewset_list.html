@@ -4,13 +4,13 @@
 {% block main %}
 
   	<h2><span class="fa fa-bed"></span> Patients</h2>
-  
+
     <div>
       <form>
         <input type="">
 
         <button class="btn btn-default"><i class="fa fa-search"></i> Search</button>
-          
+
         <div class="dropdown pull-right">
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Dropdown
@@ -22,7 +22,7 @@
             <li><a href="#">Something else here</a></li>
             <li><a href="#">Separated link</a></li>
           </ul>
-        </div>              
+        </div>
 
       </form>
     </div>
@@ -36,7 +36,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for patient in data %}
+        {% for patient in results %}
         <tr>
           <td><a href="{{patient.url}}">{{patient.first_name}} {{patient.last_name}}</a></td>
           <td>{{patient.info_code}}</td>
@@ -44,7 +44,7 @@
         </tr>
         {% endfor %}
       </tbody>
-    </table>          
+    </table>
 
     <nav class="pull-right">
       <ul class="pagination">
@@ -65,7 +65,7 @@
         </li>
       </ul>
     </nav>
-  
+
   </div>
 
 {% endblock %}

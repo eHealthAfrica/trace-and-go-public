@@ -41,27 +41,6 @@ class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
             qs = Patient.objects.all()
         return qs
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        if request.accepted_renderer.format == 'html':
-            return Response({'data': serializer.data})
-        return Response(serializer.data)
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        paginator = pagination.PageNumberPagination()
-        page = paginator.paginate_queryset(queryset, request)
-        serializer = PatientSerializer(page, many=True, context={'request': request})
-        if request.accepted_renderer.format == 'html':
-            return Response({
-                'data': serializer.data,
-                'next': paginator.get_next_link(),
-                'previous': paginator.get_previous_link(),
-                'page_number': paginator.page.number,
-            })
-        return paginator.get_paginated_response(serializer.data)
-
 
 class IsHFAmdminOrReadOnly(permissions.BasePermission):
     """
@@ -75,11 +54,15 @@ class IsHFAmdminOrReadOnly(permissions.BasePermission):
         return request.user.is_authenticated()
 
     def has_object_permission(self, request, view, health_facility):
-        return health_facility.is_admin(request.user)
+        if request.method == 'POST':
+            return request.user.is_superuser
+        return health_facility.id in HealthFacility.objects.filter(caseinvestigator__user=request.user).distinct().values_list('id', flat=True)
 
 
 class ReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
+        if not request.user.is_authenticated():
+            return False
         return request.method in permissions.SAFE_METHODS
 
 
