@@ -86,7 +86,7 @@ class Patient(models.Model):
     info_code = models.CharField(max_length=20, db_index=True, unique=True, default=id_generator)
     first_name = models.CharField(max_length=250, blank=True)
     last_name = models.CharField(max_length=250, blank=True)
-    case_id = models.CharField(max_length=250, blank=True)
+    patient_id = models.CharField(max_length=250, blank=False)
     contact_phone_number = models.CharField(max_length=250, blank=True)
     health_facility = models.ForeignKey(HealthFacility)
 

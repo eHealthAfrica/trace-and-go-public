@@ -66,7 +66,7 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         return results
 
     class Meta:
-        fields = ('url', 'health_facility_id', 'health_facility_url', 'health_facility', 'info_code', 'first_name', 'last_name', 'case_id', 'contact_phone_number', 'status', 'get_status_display', 'line_listing', 'revisions')
+        fields = ('url', 'health_facility_id', 'health_facility_url', 'health_facility', 'info_code', 'first_name', 'last_name', 'patient_id', 'contact_phone_number', 'status', 'get_status_display', 'line_listing', 'revisions')
         model = Patient
 
 

@@ -7,8 +7,9 @@ from django.db.models import Q
 
 class PatientAdmin(reversion.VersionAdmin):
     list_display = ('info_code', 'first_name', 'last_name', 'health_facility')
-    search_fields = ['info_code', 'first_name', 'last_name']
+    search_fields = ('info_code', 'first_name', 'last_name')
     raw_id_fields = ('health_facility',)
+    readonly_fields = ('info_code',)
 
     def get_queryset(self, request):
         qs = super(PatientAdmin, self).get_queryset(request)
