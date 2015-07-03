@@ -59,7 +59,7 @@
 
       <div class="form-group">
         <label>Patient ID</label>
-        <input type="text" class="form-control" value="{{data.case_id}}">
+        <input type="text" class="form-control" value="{{ data.patient_id }}">
       </div>
 
       <div class="form-group">
@@ -94,7 +94,7 @@
             {% if k == 'first_name' %}first name
             {% elif k == 'last_name' %}last name
             {% elif k == 'contact_phone_number' %}phone
-            {% elif k == 'case_id' %}case ID
+            {% elif k == 'patient_id' %}Patient ID
             {% elif k == 'health_facility' %}health facility
             {% elif k == 'status' %}status
             {% endif %}:
