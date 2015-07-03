@@ -34,6 +34,7 @@ INSTALLED_APPS = (
     'core',
     'django_extensions',
     'djcelery',
+    'raven.contrib.django.raven_compat',
 )
 
 MIDDLEWARE_CLASSES = (
