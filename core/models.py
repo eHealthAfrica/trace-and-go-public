@@ -69,6 +69,9 @@ class HealthFacility(TimeStampedModel):
         """
         return True if self.caseinvestigator_set.filter(user=user, is_admin=True) else False
 
+    class Meta:
+        verbose_name_plural = "health facilities"
+
 
 class CaseInvestigator(TimeStampedModel):
     is_admin = models.BooleanField(default=False)
