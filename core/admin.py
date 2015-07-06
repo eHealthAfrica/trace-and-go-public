@@ -8,6 +8,10 @@ from models import Patient, HealthFacility, CaseInvestigator
 
 
 def has_admin_edit_permissions(user):
+    """
+    Returns True if 'user' is a superuser *or* a registered
+    CaseInvestigator with admin permissions.
+    """
     if user.is_superuser:
         return True
     try:
@@ -18,6 +22,10 @@ def has_admin_edit_permissions(user):
 
 
 class AdminEditOnlyMixIn(reversion.VersionAdmin):
+    """
+    Mixin which can be used to limit the actions of non-admin
+    CaseInvestigators.
+    """
 
     def has_add_permission(self, request, obj=None):
         return has_admin_edit_permissions(request.user)
@@ -26,6 +34,9 @@ class AdminEditOnlyMixIn(reversion.VersionAdmin):
         return has_admin_edit_permissions(request.user)
 
     def save_model(self, request, obj, form, change):
+        """
+        If user is not allowed to edit form, raise PermissionDenied (403).
+        """
         if has_admin_edit_permissions(request.user):
             return super(reversion.VersionAdmin, self).save_model(
                 request, obj, form, change)
