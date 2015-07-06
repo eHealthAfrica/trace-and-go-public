@@ -115,14 +115,14 @@ def smswebhook(request):
     if len(patient_codes) == 1:
         # Seams to be a patient reference
 
-        if Patient.objects.filter(uid__iexact=sms_content).count() == 1:
-            pat = Patient.objects.get(uid__iexact=sms_content)
+        if Patient.objects.filter(info_code__iexact=sms_content).count() == 1:
+            pat = Patient.objects.get(info_code__iexact=sms_content)
 
-            if pat.etu:
+            if pat.health_facility:
                 mapping = {
                     'first_name': pat.first_name,
                     'second_name': pat.last_name,
-                    'h_facility': pat.etu
+                    'h_facility': pat.health_facility.name
                 }
 
                 text = wordings.patient_location % mapping
@@ -134,7 +134,7 @@ def smswebhook(request):
                         'status': pat.get_status_display()
                     }
 
-                    tasks.send_sms.delay(pat.caregiver_number, wordings.patient_status % mapping)
+                    tasks.send_sms.delay(pat.contact_phone_number, wordings.patient_status % mapping)
 
             else:
                 text = wordings.patient_no_info
