@@ -67,7 +67,7 @@ class TestSMSSending(APITestCase):
         p = self.create_patient(status='S')
         p.save()
 
-        self.assertEqual(tasks.sms_func.call_count, 4)
+        self.assertEqual(tasks.sms_func.call_count, 5)
         self.assert_calls(tasks.sms_func, [
             'location',
             'status',
@@ -116,7 +116,7 @@ class TestSMSSending(APITestCase):
             tasks.sms_func = MagicMock()
             p = self.create_patient(status=status)
             p.save()
-            self.assertEqual(tasks.sms_func.call_count, 4)
+            self.assertEqual(tasks.sms_func.call_count, 5)
 
     @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
                        CELERY_ALWAYS_EAGER=True,

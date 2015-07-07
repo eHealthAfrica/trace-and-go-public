@@ -127,9 +127,10 @@ class Patient(models.Model):
             else:
                 # Send the text messages
                 text = wordings.get_patient_info_message(self)
+                tasks.send_sms.delay(self.contact_phone_number, text)
 
-                if self.contact_phone_number:
-                    tasks.send_sms.delay(self.contact_phone_number, text)
+                text = wordings.get_reply_info_message(self)
+                tasks.send_sms.delay(self.contact_phone_number, text)
 
                 tasks.send_sms.delay(
                     self.contact_phone_number,

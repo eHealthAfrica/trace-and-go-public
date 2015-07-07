@@ -1,15 +1,16 @@
 # STATIC STRINGS
 patient_no_info = "The system has not updated the location of the patient."
 patient_not_found = 'We can not find a patient with that information id.'
-invalid_id = 'This is not a valid information id.'
+invalid_id = 'This is not a valid info code. This is an automated service. Please only text your info code to this number to receive updates.'
 too_many_requests = "Please only send one message at a time. This query was ignored"
 too_many_requests_ever = "You have sent too many requests from this number and have been blocked."
 initial_message = "You will be notified of all changes in the status and location of your loved one."
 
 # FORMAT STRINGS
-patient_info = "The patient %(first_name)s %(last_name)s has the information code %(info_code)s"
-patient_location = "The patient %(first_name)s %(last_name)s is at %(health_facility)s"
-patient_status = "The patient %(first_name)s %(last_name)s is currently %(status)s"
+reply_info = "Reply to this message with your Info Code %(info_code)s for updates about your loved one."
+patient_info = "The patient %(first_name)s %(last_name)s has the information code %(info_code)s."
+patient_location = "The patient %(first_name)s %(last_name)s is at %(health_facility)s."
+patient_status = "The patient %(first_name)s %(last_name)s is currently %(status)s."
 
 status_messages = {
     'A': '%(name)s has just been admitted to %(health_facility)s.',
@@ -19,6 +20,12 @@ status_messages = {
     'D': 'You will receive a call from a doctor about %(name)s.',
     'O': '%(name)s has been discharged.',
 }
+
+
+def get_reply_info_message(patient):
+    return reply_info % {
+        'info_code': patient.info_code,
+    }
 
 
 def get_patient_info_message(patient):
