@@ -15,7 +15,9 @@ router.register(r'health-facilities', HealthFacilityViewSet, base_name='healthfa
 router.register(r'case-investigators', CaseInvestigatorViewSet, base_name='caseinvestigator')
 
 urlpatterns = patterns('',
-                       url(r'^submit$', 'core.views.submit', name='submit'),
+                       # `/submit` is unauthenticated and is possible not used, so let's not expose it
+                       # url(r'^submit$', 'core.views.submit', name='submit'),
+
                        url(r'^smswebhook$', 'core.views.smswebhook', name='smswebhook'),
                        url(r'^admin/', include(admin.site.urls)),
                        # API Routes
