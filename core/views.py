@@ -97,13 +97,13 @@ def smswebhook(request):
         if cache.get(long_cache_name) >= 25:
             params = {
                 'phone': request.POST["phone"],
-                'text': wordings.too_many_requests_ever
+                'text': wordings.TOO_MANY_REQUESTS_EVER
             }
             return HttpResponse(json.dumps(params))
     else:
         params = {
             'phone': request.POST["phone"],
-            'text': wordings.too_many_requests
+            'text': wordings.TOO_MANY_REQUESTS
         }
         return HttpResponse(json.dumps(params))
 
@@ -119,25 +119,14 @@ def smswebhook(request):
             pat = Patient.objects.get(info_code__iexact=sms_content)
 
             if pat.health_facility:
-                mapping = {
-                    'first_name': pat.first_name,
-                    'second_name': pat.last_name,
-                    'h_facility': pat.health_facility.name
-                }
-
-                text = wordings.patient_location % mapping
+                text = wordings.get_patient_location_message(pat)
 
                 if pat.status:
-                    mapping = {
-                        'first_name': pat.first_name,
-                        'second_name': pat.last_name,
-                        'status': pat.get_status_display()
-                    }
-
-                    tasks.send_sms.delay(pat.contact_phone_number, wordings.patient_status % mapping)
+                    text = wordings.get_patient_status_message(pat)
+                    tasks.send_sms.delay(pat.contact_phone_number, text)
 
             else:
-                text = wordings.patient_no_info
+                text = wordings.PATIENT_NO_INFO
 
             params = {
                 'phone': request.POST["phone"],
@@ -147,12 +136,12 @@ def smswebhook(request):
         else:
             params = {
                 'phone': request.POST["phone"],
-                'text': wordings.patient_not_found
+                'text': wordings.PATIENT_NOT_FOUND
             }
     else:
         params = {
             'phone': request.POST["phone"],
-            'text': wordings.invalid_id
+            'text': wordings.INVALID_ID
         }
 
     return HttpResponse(json.dumps(params))

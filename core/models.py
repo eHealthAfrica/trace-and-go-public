@@ -113,60 +113,36 @@ class Patient(models.Model):
                 oldItem = Patient.objects.get(pk=self.pk)
 
                 if oldItem.health_facility_id != self.health_facility_id:
-                    # If the health facility has changed send out a message to the caregiver
-                    mapping = {
-                        'first_name': self.first_name,
-                        'second_name': self.last_name,
-                        'h_facility': self.health_facility
-                    }
-
-                    text = wordings.patient_location % mapping
+                    # If the health facility has changed send out a message to
+                    # the caregiver.
+                    text = wordings.get_patient_location_message(self)
                     tasks.send_sms.delay(self.contact_phone_number, text)
 
                 if oldItem.status != self.status:
-                    # If the status has changed send out a message to the caregiver
-                    mapping = {
-                        'first_name': self.first_name,
-                        'second_name': self.last_name,
-                        'status': self.get_status_display()
-                    }
-
-                    text = wordings.patient_status % mapping
+                    # If the status has changed send out a message to the
+                    # caregiver.
+                    text = wordings.get_patient_status_message(self)
                     tasks.send_sms.delay(self.contact_phone_number, text)
 
             else:
                 # Send the text messages
-                mapping = {
-                    'first_name': self.first_name,
-                    'second_name': self.last_name,
-                    'info_code': self.info_code
-                }
+                text = wordings.get_patient_info_message(self)
+                tasks.send_sms.delay(self.contact_phone_number, text)
 
-                text = wordings.patient_info % mapping
+                text = wordings.get_reply_info_message(self)
+                tasks.send_sms.delay(self.contact_phone_number, text)
 
-                if self.contact_phone_number:
-                    tasks.send_sms.delay(self.contact_phone_number, text)
-
-                tasks.send_sms.delay(self.contact_phone_number, wordings.initial_message)
+                tasks.send_sms.delay(
+                    self.contact_phone_number,
+                    wordings.INITIAL_MESSAGE,
+                )
 
                 if self.health_facility:
-                    mapping = {
-                        'first_name': self.first_name,
-                        'second_name': self.last_name,
-                        'h_facility': self.health_facility
-                    }
-
-                    text = wordings.patient_location % mapping
+                    text = wordings.get_patient_location_message(self)
                     tasks.send_sms.delay(self.contact_phone_number, text)
 
                 if self.status:
-                    mapping = {
-                        'first_name': self.first_name,
-                        'second_name': self.last_name,
-                        'status': self.get_status_display()
-                    }
-
-                    text = wordings.patient_status % mapping
+                    text = wordings.get_patient_status_message(self)
                     tasks.send_sms.delay(self.contact_phone_number, text)
 
         super(Patient, self).save(*args, **kwargs)  # Call the "real" save() method.
