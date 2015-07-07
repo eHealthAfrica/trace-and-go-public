@@ -122,12 +122,6 @@ def smswebhook(request):
                 text = wordings.get_patient_location_message(pat)
 
                 if pat.status:
-                    mapping = {
-                        'first_name': pat.first_name,
-                        'last_name': pat.last_name,
-                        'status': pat.get_status_display()
-                    }
-
                     text = wordings.get_patient_status_message(pat)
                     tasks.send_sms.delay(pat.contact_phone_number, text)
 

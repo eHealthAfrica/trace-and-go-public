@@ -1,15 +1,18 @@
-from mock import MagicMock, call
-from rest_framework.test import APITestCase
+from django.test.client import RequestFactory
 from django.test.utils import override_settings
+
+from mock import MagicMock, call
+
+from rest_framework.test import APITestCase
+
 from core.models import (
     Patient, HealthFacility
 )
-
 from core import tasks
 from core.views import smswebhook
-from django.test.client import RequestFactory
 
 from amsel import wordings
+
 
 class TestSMSSending(APITestCase):
 
@@ -122,12 +125,10 @@ class TestSMSSending(APITestCase):
         self.factory = RequestFactory()
         p = self.create_patient(status='A')
         p.save()
-        # tasks.send_sms.delay = MagicMock()
         tasks.sms_func = MagicMock()
         request = self.factory.post('smswebhook', {'phone': '12345',
                                                    'text': str(p.info_code)})
-        response = smswebhook(request)
+        smswebhook(request)
 
         self.assertEqual(tasks.sms_func.call_count, 1)
         self.assert_calls(tasks.sms_func, ['status'])
-
