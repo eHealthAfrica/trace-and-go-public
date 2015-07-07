@@ -6,6 +6,8 @@ from core.models import (
 )
 
 from core import tasks
+from core.views import smswebhook
+from django.test.client import RequestFactory
 
 from amsel import wordings
 
@@ -34,21 +36,19 @@ class TestSMSSending(APITestCase):
     def assert_calls(self, mock, call_keys):
         calls = {
             'location': call(
-                '123', wordings.patient_location % {
+                self.contact_phone_number,
+                wordings.patient_location % {
                     'first_name': self.first_name,
                     'last_name': self.last_name,
                     'health_facility': self.health_facility,
-                    }),
-            'changes': call(
-                '123', wordings.initial_message),
-            'status': call(
-                '123', wordings.patient_status % {
-                    'first_name': self.first_name,
-                    'last_name': self.last_name,
-                    'status': self.patient.get_status_display(),
                 }),
+            'changes': call(self.contact_phone_number,
+                            wordings.initial_message),
+            'status': call(self.contact_phone_number,
+                           wordings.get_patient_status_message(self.patient)),
             'patient_info': call(
-                '123', wordings.patient_info % {
+                self.contact_phone_number,
+                wordings.patient_info % {
                     'first_name': self.first_name,
                     'last_name': self.last_name,
                     'info_code': self.info_code,
@@ -103,3 +103,31 @@ class TestSMSSending(APITestCase):
 
         self.assertEqual(tasks.sms_func.call_count, 1)
         self.assert_calls(tasks.sms_func, ['status'])
+
+    @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
+                       CELERY_ALWAYS_EAGER=True,
+                       BROKER_BACKEND='memory')
+    def test_status_messages(self):
+        statuses = [x[0] for x in Patient.PATIENT_STATUS]
+        for status in statuses:
+            tasks.sms_func = MagicMock()
+            p = self.create_patient(status=status)
+            p.save()
+            self.assertEqual(tasks.sms_func.call_count, 4)
+
+    @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
+                       CELERY_ALWAYS_EAGER=True,
+                       BROKER_BACKEND='memory')
+    def test_sms_webhook(self):
+        self.factory = RequestFactory()
+        p = self.create_patient(status='A')
+        p.save()
+        # tasks.send_sms.delay = MagicMock()
+        tasks.sms_func = MagicMock()
+        request = self.factory.post('smswebhook', {'phone': '12345',
+                                                   'text': str(p.info_code)})
+        response = smswebhook(request)
+
+        self.assertEqual(tasks.sms_func.call_count, 1)
+        self.assert_calls(tasks.sms_func, ['status'])
+
