@@ -121,7 +121,7 @@ def smswebhook(request):
             if pat.etu:
                 mapping = {
                     'first_name': pat.first_name,
-                    'second_name': pat.last_name,
+                    'last_name': pat.last_name,
                     'h_facility': pat.etu
                 }
 
@@ -130,7 +130,7 @@ def smswebhook(request):
                 if pat.status:
                     mapping = {
                         'first_name': pat.first_name,
-                        'second_name': pat.last_name,
+                        'last_name': pat.last_name,
                         'status': pat.get_status_display()
                     }
 

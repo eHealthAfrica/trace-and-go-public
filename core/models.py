@@ -116,7 +116,7 @@ class Patient(models.Model):
                     # If the health facility has changed send out a message to the caregiver
                     mapping = {
                         'first_name': self.first_name,
-                        'second_name': self.last_name,
+                        'last_name': self.last_name,
                         'h_facility': self.health_facility
                     }
 
@@ -127,7 +127,7 @@ class Patient(models.Model):
                     # If the status has changed send out a message to the caregiver
                     mapping = {
                         'first_name': self.first_name,
-                        'second_name': self.last_name,
+                        'last_name': self.last_name,
                         'status': self.get_status_display()
                     }
 
@@ -138,7 +138,7 @@ class Patient(models.Model):
                 # Send the text messages
                 mapping = {
                     'first_name': self.first_name,
-                    'second_name': self.last_name,
+                    'last_name': self.last_name,
                     'info_code': self.info_code
                 }
 
@@ -152,7 +152,7 @@ class Patient(models.Model):
                 if self.health_facility:
                     mapping = {
                         'first_name': self.first_name,
-                        'second_name': self.last_name,
+                        'last_name': self.last_name,
                         'h_facility': self.health_facility
                     }
 
@@ -162,7 +162,7 @@ class Patient(models.Model):
                 if self.status:
                     mapping = {
                         'first_name': self.first_name,
-                        'second_name': self.last_name,
+                        'last_name': self.last_name,
                         'status': self.get_status_display()
                     }
 
