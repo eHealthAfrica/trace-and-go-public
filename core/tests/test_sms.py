@@ -40,18 +40,18 @@ class TestSMSSending(APITestCase):
         calls = {
             'location': call(
                 self.contact_phone_number,
-                wordings.patient_location % {
+                wordings.PATIENT_LOCATION % {
                     'first_name': self.first_name,
                     'last_name': self.last_name,
                     'health_facility': self.health_facility,
                 }),
             'changes': call(self.contact_phone_number,
-                            wordings.initial_message),
+                            wordings.INITIAL_MESSAGE),
             'status': call(self.contact_phone_number,
                            wordings.get_patient_status_message(self.patient)),
             'patient_info': call(
                 self.contact_phone_number,
-                wordings.patient_info % {
+                wordings.PATIENT_INFO % {
                     'first_name': self.first_name,
                     'last_name': self.last_name,
                     'info_code': self.info_code,

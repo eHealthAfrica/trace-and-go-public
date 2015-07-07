@@ -134,7 +134,7 @@ class Patient(models.Model):
 
                 tasks.send_sms.delay(
                     self.contact_phone_number,
-                    wordings.initial_message,
+                    wordings.INITIAL_MESSAGE,
                 )
 
                 if self.health_facility:

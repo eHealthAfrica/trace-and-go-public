@@ -97,13 +97,13 @@ def smswebhook(request):
         if cache.get(long_cache_name) >= 25:
             params = {
                 'phone': request.POST["phone"],
-                'text': wordings.too_many_requests_ever
+                'text': wordings.TOO_MANY_REQUESTS_EVER
             }
             return HttpResponse(json.dumps(params))
     else:
         params = {
             'phone': request.POST["phone"],
-            'text': wordings.too_many_requests
+            'text': wordings.TOO_MANY_REQUESTS
         }
         return HttpResponse(json.dumps(params))
 
@@ -126,7 +126,7 @@ def smswebhook(request):
                     tasks.send_sms.delay(pat.contact_phone_number, text)
 
             else:
-                text = wordings.patient_no_info
+                text = wordings.PATIENT_NO_INFO
 
             params = {
                 'phone': request.POST["phone"],
@@ -136,12 +136,12 @@ def smswebhook(request):
         else:
             params = {
                 'phone': request.POST["phone"],
-                'text': wordings.patient_not_found
+                'text': wordings.PATIENT_NOT_FOUND
             }
     else:
         params = {
             'phone': request.POST["phone"],
-            'text': wordings.invalid_id
+            'text': wordings.INVALID_ID
         }
 
     return HttpResponse(json.dumps(params))
