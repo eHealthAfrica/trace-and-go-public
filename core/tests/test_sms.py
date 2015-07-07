@@ -63,12 +63,43 @@ class TestSMSSending(APITestCase):
         tasks.sms_func = MagicMock()
         p = self.create_patient(status='S')
         p.save()
-        self.assertEqual(tasks.sms_func.call_count, 4)
-        self.assert_calls(
-            tasks.sms_func, [
-                'location',
-                'status',
-                'changes',
-                'patient_info',
-                ])
 
+        self.assertEqual(tasks.sms_func.call_count, 4)
+        self.assert_calls(tasks.sms_func, [
+            'location',
+            'status',
+            'changes',
+            'patient_info',
+        ])
+
+    @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
+                       CELERY_ALWAYS_EAGER=True,
+                       BROKER_BACKEND='memory')
+    def test_send_sms_health_facility_changed(self):
+        p = self.create_patient(status='S')
+        p.save()
+
+        tasks.sms_func = MagicMock()
+        hf = HealthFacility()
+        hf.name = 'HF_2'
+        self.health_facility = hf
+        hf.save()
+        p.health_facility = hf
+        p.save()
+
+        self.assertEqual(tasks.sms_func.call_count, 1)
+        self.assert_calls(tasks.sms_func, ['location'])
+
+    @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
+                       CELERY_ALWAYS_EAGER=True,
+                       BROKER_BACKEND='memory')
+    def test_send_sms_status_changed(self):
+        p = self.create_patient(status='S')
+        p.save()
+
+        tasks.sms_func = MagicMock()
+        p.status = 'A'
+        p.save()
+
+        self.assertEqual(tasks.sms_func.call_count, 1)
+        self.assert_calls(tasks.sms_func, ['status'])
