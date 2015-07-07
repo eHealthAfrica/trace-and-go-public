@@ -51,9 +51,10 @@ class TestSMSSending(APITestCase):
                 '123', wordings.patient_info % {
                     'first_name': self.first_name,
                     'last_name': self.last_name,
-                    'info_code': self.info_code})}
-        for ck in call_keys:
-            mock.assert_has_call(calls.get(ck))
+                    'info_code': self.info_code,
+                })}
+        calls = [calls.get(ck) for ck in call_keys]
+        mock.assert_has_calls(calls, any_order=True)
 
     @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True,
                        CELERY_ALWAYS_EAGER=True,
