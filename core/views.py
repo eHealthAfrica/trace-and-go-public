@@ -122,7 +122,7 @@ def smswebhook(request):
                 mapping = {
                     'first_name': pat.first_name,
                     'last_name': pat.last_name,
-                    'h_facility': pat.etu
+                    'health_facility': pat.etu
                 }
 
                 text = wordings.patient_location % mapping

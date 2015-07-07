@@ -117,7 +117,7 @@ class Patient(models.Model):
                     mapping = {
                         'first_name': self.first_name,
                         'last_name': self.last_name,
-                        'h_facility': self.health_facility
+                        'health_facility': self.health_facility
                     }
 
                     text = wordings.patient_location % mapping
@@ -153,7 +153,7 @@ class Patient(models.Model):
                     mapping = {
                         'first_name': self.first_name,
                         'last_name': self.last_name,
-                        'h_facility': self.health_facility
+                        'health_facility': self.health_facility
                     }
 
                     text = wordings.patient_location % mapping

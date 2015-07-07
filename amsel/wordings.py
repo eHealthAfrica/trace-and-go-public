@@ -8,6 +8,6 @@ initial_message = "You will be notified of all changes in the status and locatio
 
 # FORMAT STRINGS
 patient_info = "The patient %(first_name)s %(last_name)s has the information code %(info_code)s"
-patient_location = "The patient %(first_name)s %(last_name)s is at %(h_facility)s"
+patient_location = "The patient %(first_name)s %(last_name)s is at %(health_facility)s"
 patient_status = "The patient %(first_name)s %(last_name)s is currently %(status)s"
 
