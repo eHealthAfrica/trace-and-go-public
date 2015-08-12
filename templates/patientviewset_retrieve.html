@@ -1,25 +1,37 @@
 {% extends "index.html" %}
 {% load i18n %}
+{% load staticfiles %}
 
 {% block main %}
 
 
   <div class="clearfix">
     <h2 class="pull-left"><span class="fa fa-bed"></span> Add / Edit Patient</h2>
-
-    <button class="btn btn-success pull-right"><i class="fa fa-check"></i> Save</button>
-
+    <button class="btn btn-success pull-right" id="save"><i class="fa fa-check"></i> Save</button>
   </div>
   <hr>
+
   <form>
 
-  <div class="row">
-    <div class="col-md-12">
+    <input type="submit" id="passwordResetButton" class="small button" />
+
+  <div class="column">
+    <div class="col-md-12" id="patientStatusSelect">
 
       <h3>Patient Status</h3>
-      <label>
-        <input type="radio" name="status" value="{{status}}"> {{get_status_display}}
-      </label>
+
+      <!-- <label id="patientStatusSelect"> -->
+      <!--   <input type="radio" name="status" id="patientStatus" value="{{status}}" required> {{get_status_display}} -->
+      <!-- </label> -->
+      <!-- <label> -->
+      <!--   <input type="radio" name="status" id="patientStatus" value="oijasdf" required> {{get_status_display}} -->
+      <!-- </label> -->
+      <!-- <label> -->
+      <!--   <input type="radio" name="status" id="patientStatus" value="oijasdf" required> {{get_status_display}} -->
+      <!-- </label> -->
+      <!-- <label> -->
+      <!--   <input type="radio" name="status" id="patientStatus" value="aaaaaa" required> {{get_status_display}} -->
+      <!-- </label> -->
 
     </div>
   </div>
@@ -31,22 +43,23 @@
 
       <div class="form-group">
         <label>First Name</label>
-        <input type="text" class="form-control" value="{{first_name}}">
+        <!-- <input type="text" class="form-control" name="firstName" value="{{first_name}}"> -->
+        <input type="text" class="form-control" name="firstName" required/>
       </div>
 
       <div class="form-group">
         <label>Last Name</label>
-        <input type="text" class="form-control" value="{{last_name}}">
+        <input type="text" class="form-control" name="lastName" value="{{last_name}}">
       </div>
 
       <div class="form-group">
         <label>Next of Kin Phone Number</label>
-        <input type="text" class="form-control" value="{{contact_phone_number}}">
+        <input type="text" class="form-control" name="phoneNumber" value="{{contact_phone_number}}">
       </div>
 
       <div class="form-group">
         <label>Info Code</label>
-        <input type="text" class="form-control" value="{{info_code}}">
+        <input type="text" class="form-control" name="infoCode" value="{{info_code}}" disabled>
       </div>
 
     </div>
@@ -70,8 +83,8 @@
 
       <div class="form-group">
         <label>Health Facility</label>
-        <select>
-          <option value="{{health_facility.health_facility_id}}">{{health_facility.name}}</option>
+        <select id="healthFacilitySelect">
+          <!-- <option value="{{health_facility.health_facility_id}}">{{health_facility.name}}</option> -->
         </select>
       </div>
 
@@ -106,4 +119,8 @@
     </div>
   </div>
 
+{% endblock %}
+
+{% block javascript %}
+  {{ block.super }}
 {% endblock %}
