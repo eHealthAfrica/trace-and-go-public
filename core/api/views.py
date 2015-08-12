@@ -25,12 +25,19 @@ class TemplateNameMixin:
         return ['%s_%s.html' % (self.__class__.__name__.lower(), self.action),
                 '%s.html' % self.__class__.__name__.lower()]
 
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 
 class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
     serializer_class = PatientSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter,)
     filter_fields = ('first_name', 'last_name')
     search_fields = ('first_name', 'last_name')
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PatientViewSet, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         request = self.request
@@ -86,3 +93,4 @@ class CaseInvestigatorViewSet(TemplateNameMixin, viewsets.ModelViewSet):
         if request.user.is_superuser:
             qs = CaseInvestigator.objects.all()
         return qs
+
