@@ -52,6 +52,7 @@
       </div>
     </nav>
 
+    {% if is_false == user.is_anonymous %}
     <div class="container-fluid">
       <div class="row wrapper">
 
@@ -66,6 +67,7 @@
             <span class="fa fa-hospital-o"></span> Health Facilities
           </a>
         </div>
+    {% endif %}
 
         <div class="col-sm-8 col-md-9 main">
 
