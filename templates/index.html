@@ -40,15 +40,17 @@
             <span>Trace & Go</span>
           </a>
         </div>
+        {% if user.is_authenticated %}
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li>
               <a href="#">
-                Hi, Brennan Novak <span class="caret"></span>
+                Welcome, {{ user.username }} <span class="caret"></span>
               </a>
             </li>
           </ul>
         </div>
+        {% endif %}
       </div>
     </nav>
 
@@ -72,7 +74,6 @@
         <div class="col-sm-8 col-md-9 main">
 
           {% block main %}
-          Welcome!
           {% endblock main %}
 
         </div>
