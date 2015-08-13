@@ -16,8 +16,6 @@ requirejs.config({
 });
 
 define([
-  'jquery',
-  'jquery.validate',
   'patient',
 ]);
 

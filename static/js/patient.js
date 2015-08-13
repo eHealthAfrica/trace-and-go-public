@@ -24,7 +24,6 @@ define(['jquery', 'jquery.validate', 'validatePatientForm'], function (jquery, v
   }
 
   jquery(function () {
-    console.log(validatePatientForm);
     validatePatientForm.validate();
     listenForSubmit();
   });
