@@ -2,7 +2,10 @@
 
 {% block main %}
 
-<div class="container col-md-4 col-md-offset-6 text-center">
+<div class="container text-center">
+
+  <div class="col-xs-12" style="height:50px;"></div>
+
   <form style="display:inline-block" name="LoginForm" action="/accounts/login/?next=/patients/" method="post">
     {% csrf_token %}
 
@@ -10,12 +13,12 @@
     <input type="hidden" name="next" value="{{ next }}"/>
     {% endif %}
 
-    <input type="text" style="margin:4px" class="form-control" id="username" name="username" placeholder="Username"/>
+    <input type="text" class="form-control" style="margin:4px;text-align:center" id="username" name="username" placeholder="Username"/>
 
-    <input type="password" class="form-control" name="password" style="margin:4px" id="password" placeholder="Password"/>
+    <input type="password" class="form-control" name="password" style="margin:4px; text-align:center" id="password" placeholder="Password"/>
 
     <div class="clearfix">
-      <button class="btn btn-primary pull-right" style="margin-right:-2px" id="save"><i class="fa"></i><span>Log in</span></button>
+      <button class="btn btn-primary" style="margin-right:-7px; margin-top:8px" id="save"><i class="fa"></i><span>Log in</span></button>
     </div>
 
   </form>
