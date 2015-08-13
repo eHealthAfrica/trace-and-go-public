@@ -4,7 +4,7 @@ define(['jquery', 'jquery.validate'], function(jquery) {
     "phoneNumber": "This doesn't look like a phone number, please try again."
   };
 
-  function validatePatientForm () {
+  function validate () {
     jquery.validator.addMethod("phoneNumber", function (value, element) {
       return this.optional(element) || /^\+?\d{4,}$/i.test(value);
     }, errorMessages.phoneNumber);
@@ -40,7 +40,7 @@ define(['jquery', 'jquery.validate'], function(jquery) {
   }
 
   return {
-    validatePatientForm: validatePatientForm
+    validate: validate
   };
 
 });
