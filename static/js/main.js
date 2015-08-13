@@ -3,15 +3,13 @@ requirejs.config({
     "jquery": "//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/jquery.min",
     "jquery.validate": "//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min",
     "underscore": "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min",
-    "bootstrap": "//ehealthafrica.github.io/ehealth-bootstrap/js/bootstrap.min",
-    "viewport-fix": "//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/ie10-viewport-bug-workaround",
-    "patient": "patient"
+    // "bootstrap": "//ehealthafrica.github.io/ehealth-bootstrap/js/bootstrap.min",
+    // "viewport-fix": "//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/ie10-viewport-bug-workaround",
+    "patient": "patient",
+    "validatePatientForm": "validatePatientForm"
   },
   shim: {
     'jquery.validate': {
-      deps: ['jquery']
-    },
-    'bootstrap': {
       deps: ['jquery']
     }
   }
@@ -20,7 +18,6 @@ requirejs.config({
 define([
   'jquery',
   'jquery.validate',
-  'bootstrap',
-  'viewport-fix',
-  'patient'
+  'patient',
 ]);
+
