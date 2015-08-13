@@ -4,16 +4,14 @@
 
 {% block main %}
 
+{{ block.super }}
 
   <div class="clearfix">
     <h2 class="pull-left"><span class="fa fa-bed"></span> Add / Edit Patient</h2>
     <button class="btn btn-success pull-right" id="save"><i class="fa fa-check"></i> Save</button>
   </div>
   <hr>
-
-  <form>
-
-    <input type="submit" id="passwordResetButton" class="small button" />
+  <form action="/patients/" method="post" name="patientForm">
 
   <div class="column">
     <div class="col-md-12" id="patientStatusSelect">
