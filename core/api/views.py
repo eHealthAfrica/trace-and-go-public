@@ -1,8 +1,11 @@
+from django.db.models import Q
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
 from rest_framework import viewsets
-from rest_framework import filters
 from rest_framework import permissions
 
-from django.db.models import Q
+import rest_framework_filters as filters
 
 from core.models import (
     Patient,
@@ -25,15 +28,19 @@ class TemplateNameMixin:
         return ['%s_%s.html' % (self.__class__.__name__.lower(), self.action),
                 '%s.html' % self.__class__.__name__.lower()]
 
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+
+class PatientFilter(filters.FilterSet):
+    first_name = filters.AllLookupsFilter(name='first_name')
+    last_name = filters.AllLookupsFilter(name='last_name')
+    info_code = filters.AllLookupsFilter(name='info_code')
+    class Meta:
+        model = Patient
+        fields = ['first_name', 'last_name', 'info_code']
 
 
 class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
     serializer_class = PatientSerializer
-    filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter,)
-    filter_fields = ('first_name', 'last_name')
-    search_fields = ('first_name', 'last_name')
+    filter_class = PatientFilter
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
