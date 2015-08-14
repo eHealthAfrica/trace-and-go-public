@@ -6,7 +6,8 @@ requirejs.config({
     // "bootstrap": "//ehealthafrica.github.io/ehealth-bootstrap/js/bootstrap.min",
     // "viewport-fix": "//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/ie10-viewport-bug-workaround",
     "patient": "patient",
-    "validatePatientForm": "validatePatientForm"
+    "validatePatientForm": "validatePatientForm",
+    "layout": "layout"
   },
   shim: {
     'jquery.validate': {
@@ -16,6 +17,9 @@ requirejs.config({
 });
 
 define([
-  'patient',
-]);
+  'layout',
+  'patient'
+], function (layout) {
+  layout.adjustSidebar();
+});
 
