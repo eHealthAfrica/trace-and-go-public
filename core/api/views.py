@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 from rest_framework import viewsets
 from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.decorators import list_route
 
 import rest_framework_filters as filters
 
@@ -45,6 +47,10 @@ class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super(PatientViewSet, self).dispatch(request, *args, **kwargs)
+
+    @list_route(url_path='add')
+    def add(self, request, *args, **kwargs):
+        return Response()
 
     def get_queryset(self):
         request = self.request
@@ -100,4 +106,3 @@ class CaseInvestigatorViewSet(TemplateNameMixin, viewsets.ModelViewSet):
         if request.user.is_superuser:
             qs = CaseInvestigator.objects.all()
         return qs
-
