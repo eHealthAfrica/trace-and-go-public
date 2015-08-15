@@ -6,7 +6,7 @@
 
 {{ block.super }}
 
-  <form action="/patients/" method="post" id="patientForm" name="patientForm">
+  <form action="" id="patientForm" name="patientForm">
 
     <div class="column">
 
@@ -18,20 +18,7 @@
     <div id="alerts" class="text-center"></div>
 
     <h3>Patient Status</h3>
-    <div class="col-md-12" id="patientStatusSelect">
-
-      <!-- <label id="patientStatusSelect"> -->
-      <!--   <input type="radio" name="status" id="patientStatus" value="{{status}}" required> {{get_status_display}} -->
-      <!-- </label> -->
-      <!-- <label> -->
-      <!--   <input type="radio" name="status" id="patientStatus" value="oijasdf" required> {{get_status_display}} -->
-      <!-- </label> -->
-      <!-- <label> -->
-      <!--   <input type="radio" name="status" id="patientStatus" value="oijasdf" required> {{get_status_display}} -->
-      <!-- </label> -->
-      <!-- <label> -->
-      <!--   <input type="radio" name="status" id="patientStatus" value="aaaaaa" required> {{get_status_display}} -->
-      <!-- </label> -->
+    <div class="form-group col-md-12" id="patientStatusSelect">
 
     </div>
 
@@ -73,17 +60,10 @@
         <input type="text" class="form-control" name="patient_id" value="{{ patient_id }}">
       </div>
 
-      <!-- <div class="form-group"> -->
-      <!--   <label>Case Investigator</label> -->
-      <!--   <select class="form-control" name="case_investigator"> -->
-      <!--     <option value="">select investigator</option> -->
-      <!--   </select> -->
-      <!-- </div> -->
-
       <div class="form-group">
         <label>Health Facility</label>
         <select class="form-control" name="health_facility" id="healthFacilitySelect">
-          <option value=""></option>
+          <!-- <option value="{{health_facility_id}}">{{health_facility.name}}</option> -->
         </select>
       </div>
       
