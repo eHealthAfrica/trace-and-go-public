@@ -1,13 +1,13 @@
 define(['jquery', 'jquery.validate'], function(jquery) {
 
   var errorMessages = {
-    "phoneNumber": "This doesn't look like a phone number, please try again."
+    "phone_number": "This doesn't look like a phone number, please try again."
   };
 
   function validate () {
-    jquery.validator.addMethod("phoneNumber", function (value, element) {
+    jquery.validator.addMethod("phone_number", function (value, element) {
       return this.optional(element) || /^\+?[\d\s]{4,}$/i.test(value);
-    }, errorMessages.phoneNumber);
+    }, errorMessages.phone_number);
     jquery('#patientForm').validate({
       rules: {
         first_name: {
@@ -18,8 +18,14 @@ define(['jquery', 'jquery.validate'], function(jquery) {
         },
         contact_phone_number: {
           required: true,
-          phoneNumber: true
+          phone_number: true
+        },
+        patient_status: {
+          required: true
         }
+      },
+      messages: {
+        "patient_status": "Please select one option."
       },
       highlight: function(element) {
         $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -30,12 +36,14 @@ define(['jquery', 'jquery.validate'], function(jquery) {
       errorElement: 'span',
       errorClass: 'help-block',
       errorPlacement: function(error, element) {
-        if(element.length) {
-          error.insertAfter(element);
-        } else {
+        if (element.attr('type') === 'radio') {
+          error.insertBefore("input:first");
+        }
+        else {
           error.insertAfter(element);
         }
       }
+
     });
   }
 
