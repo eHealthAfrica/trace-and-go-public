@@ -6,7 +6,7 @@ define(['jquery', 'jquery.validate'], function(jquery) {
 
   function validate () {
     jquery.validator.addMethod("phoneNumber", function (value, element) {
-      return this.optional(element) || /^\+?\d{4,}$/i.test(value);
+      return this.optional(element) || /^\+?[\d\s]{4,}$/i.test(value);
     }, errorMessages.phoneNumber);
     jquery('#patientForm').validate({
       rules: {
