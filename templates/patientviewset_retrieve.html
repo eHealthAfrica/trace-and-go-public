@@ -8,15 +8,17 @@
 
   <form action="/patients/" method="post" id="patientForm" name="patientForm">
 
-  <div class="clearfix">
-    <button class="btn btn-success pull-right" id="save" data-toggle="button" onclick="this.blur();"><i class="fa"></i> Save</button>
-    <h2 class="pull-left"><span class="fa fa-bed"></span> Add / Edit Patient</h2>
-  </div>
-  <hr>
+    <div class="column">
 
-  <div class="column">
-    <div class="col-md-12" id="patientStatusSelect">
+    <hr>
+    <div class="row clearfix">
+      <button class="btn btn-success pull-right" id="saveForm" style="margin-right:20px" data-toggle="button" onclick="this.blur();"><i class="fa"></i> Save</button>
+      <h2 class="pull-left" style="margin-left: 20px; margin-top:3px; margin-bottom:3px;"><span class="fa fa-bed"></span> Add / Edit Patient</h2>
+    </div>
+    <hr>
 
+    <div id="alerts"></div>
+    <!-- <div class="col-md-12" id="patientStatusSelect"> -->
       <h3>Patient Status</h3>
 
       <!-- <label id="patientStatusSelect"> -->
@@ -32,7 +34,8 @@
       <!--   <input type="radio" name="status" id="patientStatus" value="aaaaaa" required> {{get_status_display}} -->
       <!-- </label> -->
 
-    </div>
+    <!-- </div> -->
+
   </div>
 
   <div class="row">
@@ -41,19 +44,19 @@
       <h3>Patient Info</h3>
 
       <div class="form-group">
-        <label class="control-label" for="inputError">First Name</label>
+        <label class="control-label" for="first_name">First Name</label>
         <!-- <input type="text" class="form-control" name="firstName" value="{{first_name}}"> -->
-        <input type="text" class="form-control" id="inputError" name="first_name">
+        <input type="text" class="form-control" id="first_name" name="first_name">
       </div>
 
       <div class="form-group">
-        <label class="control-label" for="inputError">Last Name</label>
-        <input type="text" class="form-control" id="inputError" name="last_name" value="{{last_name}}">
+        <label class="control-label" for="last_name">Last Name</label>
+        <input type="text" class="form-control" id="last_name" name="last_name" value="{{last_name}}" required>
       </div>
 
       <div class="form-group">
-        <label class="control-label" for="inputError">Next of Kin Phone Number</label>
-        <input type="text" class="form-control" id="inputError" name="contact_phone_number" value="{{contact_phone_number}}">
+        <label class="control-label" for="contact_phone_number">Next of Kin Phone Number</label>
+        <input type="text" class="form-control" id="contact_phone_number" name="contact_phone_number" value="{{contact_phone_number}}">
       </div>
 
       <div class="form-group">
@@ -89,10 +92,9 @@
       </div>
 
     </div>
-
   </div>
-
   </form>
+
   <hr>
 
   <div class="row">
