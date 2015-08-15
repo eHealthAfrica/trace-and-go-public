@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url, include
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
 import routers
@@ -25,7 +26,7 @@ urlpatterns = patterns('',
                        url(r'^smswebhook$', 'core.views.smswebhook', name='smswebhook'),
                        url(r'^admin/', include(admin.site.urls)),
                        # API Routes
-                       url(r'^$', TemplateView.as_view(template_name="index.html")),
+                       url(r'^$', login_required(TemplateView.as_view(template_name="index.html"))),
                        url(r'^', include(router.urls), ),
                        url(r'^v1/', include(router.urls, namespace='v1')),
                        # API Auth Urls
