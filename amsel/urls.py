@@ -32,8 +32,11 @@ urlpatterns = patterns('',
                        # API Auth Urls
                        url(r'^api-auth/', include('rest_framework.urls',
                                                   namespace='rest_framework')),
-                       url(r'^accounts/login/$', 'django.contrib.auth.views.login',
+                       url(r'^accounts/login/$',
+                           'django.contrib.auth.views.login',
                            {'template_name': 'login.html'}),
                        url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
-                           {'template_name': 'logout.html'}),
-                       )
+                           {'template_name': 'logout.html',
+                            'next_page': '/accounts/login/'}
+                           ),
+)
