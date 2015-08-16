@@ -29,13 +29,13 @@
 
     <nav class="navbar navbar-call-center navbar-fixed-top">
       <div class="container-fluid">
+
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+          {% if user.is_authenticated %}
+          <button type="button" class="navbar-toggle collapsed dropdown-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span style="color:white;">Menu</span>
           </button>
+          {% endif %}
           <a class="navbar-brand" href="/">
             <img src="{% static "images/app-tag-32.png" %}">
             <span>Trace & Go</span>
@@ -44,10 +44,13 @@
         {% if user.is_authenticated %}
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="#">
-                Welcome, {{ user.username }} <span class="caret"></span>
-              </a>
+            <li class="dropdown">
+              <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Welcome, {{ user.username }} <b class="caret"></b></a>
+              <ul class="dropdown-menu" style="background-color:white;" role="menu" aria-labelledby="dLabel">
+                <li><a tabindex="-1" style="color:#0F74BD;" href="/patients/add">Add Patient</a></li>
+                <li><a tabindex="-1" style="color:#0F74BD;" href="/patients">List Patients</a></li>
+                <li><a tabindex="-1" style="color:#0F74BD;" href="/accounts/logout">Log out</a></li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -67,7 +70,7 @@
             <span class="fa fa-plus"></span> Add Patient
           </a>
         </div>
-    {% endif %}
+        {% endif %}
 
         <div class="col-sm-8 col-md-9 main">
 
@@ -75,20 +78,15 @@
           {% endblock main %}
 
         </div>
-
       </div>
     </div>
-
 
     <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- See static/js/main.js for details. -->
     {% block javascript %}
-    <!-- <script src="//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/jquery.min.js"></script> -->
-    <!-- <script src="//ehealthafrica.github.io/ehealth-bootstrap/js/bootstrap.min.js"></script> -->
     <script data-main="{% static 'js/main' %}" src="{% static 'js/require.js' %}"></script>
     {% endblock %}
 
   </body>
-
 </html>

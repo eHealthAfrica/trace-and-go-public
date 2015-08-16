@@ -9,15 +9,13 @@ define([
   'load-patient-form'
 ], function (jquery, validate, _, validatePatientForm, layout, alerts, ajaxInit, loadPatientForm) {
 
-  var ORIGINAL_FORM_DATA = undefined;
-
   function getFormData(form) {
-    var unindexed_array = form.serializeArray();
-    var indexed_array = {};
-    jquery.map(unindexed_array, function(n, i){
-      indexed_array[n['name']] = n['value'];
+    var unindexedArray = form.serializeArray();
+    var indexedArray = {};
+    jquery.map(unindexedArray, function(n, i){
+      indexedArray[n.name] = n.value;
     });
-    return indexed_array;
+    return indexedArray;
   }
 
   function isPristine(form) {
@@ -86,7 +84,7 @@ define([
     getOptions().done(
       function(options) {
         loadPatientForm.populate(options, HEALTH_FACILITY_ID, PATIENT_STATUS);
-        ORIGINAL_FORM_DATA = getFormData(jquery('#patientForm'));
+        ORIGINAL_FORM_DATA = getFormData(form);
       });
   }
 
@@ -104,9 +102,9 @@ define([
     layout.adjustSidebar();
     var form = jquery('#patientForm');
     if (form.length) {
-      loadForm();
+      loadForm(form);
       validatePatientForm.validate(form);
-      form.submit(function (e) {
+      form.submit(function(e) {
         e.preventDefault();
         submitForm(form);
       });

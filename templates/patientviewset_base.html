@@ -19,7 +19,6 @@
 
     <h3>Patient Status</h3>
     <div class="form-group col-md-12" id="patientStatusSelect">
-
     </div>
 
   </div>
@@ -32,7 +31,7 @@
       <div class="form-group">
         <label class="control-label" for="first_name">First Name</label>
         <!-- <input type="text" class="form-control" name="firstName" value="{{first_name}}"> -->
-        <input type="text" class="form-control" id="first_name" name="first_name">
+        <input type="text" class="form-control" id="first_name" name="first_name" value="{{first_name}}">
       </div>
 
       <div class="form-group">
@@ -62,7 +61,7 @@
 
       <div class="form-group">
         <label>Health Facility</label>
-        <select class="form-control" name="health_facility" id="healthFacilitySelect">
+        <select class="form-control" name="health_facility_id" id="healthFacilitySelect">
           <!-- <option value="{{health_facility_id}}">{{health_facility.name}}</option> -->
         </select>
       </div>
@@ -100,5 +99,6 @@
 {% endblock %}
 
 {% block javascript %}
+  <script type="text/javascript">var PATIENT_STATUS="{{status}}", HEALTH_FACILITY_ID="{{health_facility_id}}";</script>
   {{ block.super }}
 {% endblock %}

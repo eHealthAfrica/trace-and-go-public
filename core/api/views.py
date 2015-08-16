@@ -35,6 +35,7 @@ class PatientFilter(filters.FilterSet):
     first_name = filters.AllLookupsFilter(name='first_name')
     last_name = filters.AllLookupsFilter(name='last_name')
     info_code = filters.AllLookupsFilter(name='info_code')
+
     class Meta:
         model = Patient
         fields = ['first_name', 'last_name', 'info_code']

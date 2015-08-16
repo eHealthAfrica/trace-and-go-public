@@ -24,16 +24,16 @@ define([
       getHealthFacilityChoices(response),
       function(choice) { return choice.display_name; }
     );
-    var parentElem = jquery('#healthFacilitySelect');
+    var hfSelect = jquery('#healthFacilitySelect');
     jquery.each(choices, function (i, item) {
-      insertOption(parentElem, item);
+      insertOption(hfSelect, item);
     });
     choices = _.sortBy(
       getStatusChoices(response),
       function(choice) { return choice.display_name; }
     );
-    parentElem.val(healthFacilityId);
-    parentElem = jquery('#patientStatusSelect');
+    hfSelect.val(healthFacilityId);
+    var statusSelect = jquery('#patientStatusSelect');
     jquery.each(choices, function(i, item) {
       var label = jquery('<div/>', {
         class: "row"
@@ -48,7 +48,7 @@ define([
       label.append(jquery('<span/>', {
         text: item.display_name
       }));
-      parentElem.append(label);
+      statusSelect.append(label);
     });
     jquery('input[name=status]').val([patientStatus]);
   }

@@ -8,12 +8,7 @@ define([
 
   function getSuccessMessage(verb, formData) {
     var patientName = getPatientName(formData);
-    return ("Successfully "
-            +verb
-            +" patient "
-            +"\""
-            +patientName
-            +"\"");
+    return "Successfully " + verb +" patient " + "\"" +patientName +"\"";
   }
 
   function showAlert(message, alertClass) {
@@ -35,7 +30,7 @@ define([
   function showAJAXFailureAlert () {
     showAlert("Could not connect to database, please try again later.", 'alert-danger');
   }
-  
+
   return {
     showAlert: showAlert,
     showAJAXFailureAlert: showAJAXFailureAlert,
