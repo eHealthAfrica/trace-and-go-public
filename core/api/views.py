@@ -57,7 +57,7 @@ class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
         qs = Patient.objects.filter(health_facility__caseinvestigator__user=request.user).distinct()
         if request.user.is_superuser:
             qs = Patient.objects.all()
-        return qs
+        return qs.order_by('-pk')
 
 
 class IsHFAmdminOrReadOnly(permissions.BasePermission):
