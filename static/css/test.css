@@ -1,1 +1,12 @@
 html { height: 100%; }
+
+#welcome-dropdown {
+    background-color: #0F74BD;
+    color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+    #navbar {
+        min-height: 200px;
+    }
+}
