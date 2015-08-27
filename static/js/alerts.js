@@ -21,10 +21,7 @@ define([
   function showSuccessAlert(verb, formData) {
     var message = getSuccessMessage(verb, formData);
     var elm = showAlert(message, 'alert-success');
-    elm.animate({opacity: 0},
-                {duration: 3000,
-                 complete: function () { location.href = '/patients/'; }
-                });
+    elm.animate({opacity: 0}, {duration: 3000});
   }
 
   function showAJAXFailureAlert () {
