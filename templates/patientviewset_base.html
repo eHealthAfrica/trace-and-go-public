@@ -72,9 +72,10 @@
 
   <hr>
 
+  {% if revisions %}
   <div class="row">
     <div class="col-md-12">
-      <h3>Status Notifications</h3>
+      <h3>History</h3>
       <ul class="list-group">
         {% for r in revisions %}
           <li class="list-group-item">
@@ -95,7 +96,8 @@
       </ul>
     </div>
   </div>
-
+  {% endif %}
+  
 {% endblock %}
 
 {% block javascript %}

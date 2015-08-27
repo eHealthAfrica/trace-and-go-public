@@ -7,12 +7,36 @@
 <h2><span class="fa fa-bed"></span> Patients</h2>
 <hr>
 
-<form class="navbar-form navbar-left" role="search">
-  <div class="form-group">
-    <input type="text" class="form-control" placeholder="Search">
+<form class="navbar-form navbar" role="search">
+  <div class="form-group pull-left">
+    <input id="searchPatientList" type="text" class="form-control" placeholder="Search">
+    <select id="filterByStatus" class="form-control">
+      <option value="" disabled>Filter by patient status (optional)</option>
+    </select>
+    <button type="submit" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search">Search</span></button>
   </div>
-  <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search">Search</span></button>
 </form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th> Info Code </th>
+      <th>Health Facility</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for patient in results %}
+    <tr>
+      <td><a href="{{patient.url}}">{{patient.first_name}} {{patient.last_name}}</a></td>
+      <td>{{patient.get_status_display}}</td>
+      <td>{{patient.info_code}}</td>
+      <td>{{patient.health_facility.name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 <nav class="pull-right">
   <ul class="pagination">
@@ -38,25 +62,5 @@
     <!-- </li> -->
   </ul>
 </nav>
-
-
-    <table class="table table-boxed table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Info Code</th>
-          <th>Health Facility</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for patient in results %}
-        <tr>
-          <td><a href="{{patient.url}}">{{patient.first_name}} {{patient.last_name}}</a></td>
-          <td>{{patient.info_code}}</td>
-          <td><a href="{{patient.health_facility.url}}">{{patient.health_facility.name}}</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
 
 {% endblock %}
