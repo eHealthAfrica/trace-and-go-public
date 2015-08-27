@@ -6,8 +6,9 @@ define([
   'layout',
   'alerts',
   'initialize-ajax',
-  'load-patient-form'
-], function (jquery, validate, _, validatePatientForm, layout, alerts, ajaxInit, loadPatientForm) {
+  'load-patient-form',
+  'search'
+], function (jquery, validate, _, validatePatientForm, layout, alerts, ajaxInit, loadPatientForm, search) {
 
   function getFormData(form) {
     var unindexedArray = form.serializeArray();
@@ -53,7 +54,10 @@ define([
         contentType: 'application/json',
         dataType: 'json',
         error: alerts.showAJAXFailureAlert,
-        success: function () { alerts.showSuccessAlert('added', formData); }
+        success: function () {
+          alerts.showSuccessAlert('added', formData);
+          ORIGINAL_FORM_DATA = formData;
+        }
       });
     } else if (requestType === 'PATCH') {
       jquery.ajax({
@@ -64,7 +68,10 @@ define([
         dataType: 'json',
         headers: {'X-HTTP-Method-Override': 'PATCH'},
         error: alerts.showAJAXFailureAlert,
-        success: function () { alerts.showSuccessAlert('edited', formData); }
+        success: function () {
+          alerts.showSuccessAlert('edited', formData);
+          ORIGINAL_FORM_DATA = formData;
+        }
       });
     }
   }
@@ -99,16 +106,17 @@ define([
   }
 
   function initialize() {
-    layout.adjustSidebar();
-    var form = jquery('#patientForm');
-    if (form.length) {
-      loadForm(form);
-      validatePatientForm.validate(form);
-      form.submit(function(e) {
+    search.initSearchForm();
+    var patientForm = jquery('#patientForm');
+    if (patientForm.length) {
+      loadForm(patientForm);
+      validatePatientForm.validate(patientForm);
+      patientForm.submit(function(e) {
         e.preventDefault();
-        submitForm(form);
+        submitForm(patientForm);
       });
     }
+    layout.adjustSidebar();
   }
 
   return {

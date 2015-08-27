@@ -1,5 +1,8 @@
 {% extends "index.html" %}
 
+{% block sidebar %}
+{% endblock %}
+
 {% block main %}
 <div class="container">
   <div class="row">
@@ -9,10 +12,6 @@
 
       <form style="display:inline-block" name="LoginForm" action="/accounts/login/?next=/patients/" method="post">
         {% csrf_token %}
-
-        {% if next %}
-        <input type="hidden" name="next" value="{{ next }}"/>
-        {% endif %}
 
         <input type="text" class="form-control" style="margin:4px;text-align:center" id="username" name="username" placeholder="Username"/>
 

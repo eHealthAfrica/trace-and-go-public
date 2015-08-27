@@ -1,8 +1,7 @@
 define(['jquery'], function(jquery) {
 
   function adjustSidebar () {
-    var htmlHeight = jquery('html').height();
-    jquery('.sidebar').height(htmlHeight);
+    jquery('.sidebar').height(jquery(document).height());
   }
 
   return {

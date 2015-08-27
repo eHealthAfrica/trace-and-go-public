@@ -51,6 +51,10 @@ define([
       statusSelect.append(label);
     });
     jquery('input[name=status]').val([patientStatus]);
+    var cancelButton = jquery('#cancelEdit');
+    cancelButton.click(function() {
+      location.href = '/patients';
+    });
   }
 
   return {
