@@ -35,10 +35,11 @@ class PatientFilter(filters.FilterSet):
     first_name = filters.AllLookupsFilter(name='first_name')
     last_name = filters.AllLookupsFilter(name='last_name')
     info_code = filters.AllLookupsFilter(name='info_code')
+    status = filters.AllLookupsFilter(name='status')
 
     class Meta:
         model = Patient
-        fields = ['first_name', 'last_name', 'info_code']
+        fields = ['first_name', 'last_name', 'info_code', 'status']
 
 
 class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
@@ -58,6 +59,11 @@ class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
         qs = Patient.objects.filter(health_facility__caseinvestigator__user=request.user).distinct()
         if request.user.is_superuser:
             qs = Patient.objects.all()
+        contains = self.request.query_params.get('contains', None)
+        if contains:
+            qs = qs.filter(
+                Q(first_name__icontains=contains) | Q(last_name__icontains=contains) | Q(info_code__icontains=contains)
+            )
         return qs.order_by('-pk')
 
 
