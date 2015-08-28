@@ -94,6 +94,7 @@ class ReadOnly(permissions.BasePermission):
 class HealthFacilityViewSet(TemplateNameMixin, viewsets.ModelViewSet):
     serializer_class = HealthFacilitySerializer
     permission_classes = (IsHFAmdminOrReadOnly,)
+    paginate_by_param = 'limit'
 
     def get_queryset(self):
         request = self.request
