@@ -38,6 +38,7 @@ class UserSerializer(serializers.Serializer):
 
 class HealthFacilitySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
+        fields = ('url', 'created', 'modified', 'name', 'slug', 'pk')
         model = HealthFacility
 
 
