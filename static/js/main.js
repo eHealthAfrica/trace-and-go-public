@@ -6,7 +6,7 @@ requirejs.config({
     'bootstrap': '//ehealthafrica.github.io/ehealth-bootstrap/js/bootstrap.min',
     'viewport-fix': '//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/ie10-viewport-bug-workaround',
     'patient': 'patient',
-    'validatePatientForm': 'validatePatientForm',
+    'validate-patient-form': 'validate-patient-form',
     'layout': 'layout',
     'alerts': 'alerts',
     'initialize-ajax': 'initialize-ajax',

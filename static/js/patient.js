@@ -2,7 +2,7 @@ define([
   'jquery',
   'jquery.validate',
   'underscore',
-  'validatePatientForm',
+  'validate-patient-form',
   'load-patient-form',
   'submit-patient-form',
   'search',
