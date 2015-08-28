@@ -11,28 +11,14 @@ requirejs.config({
     'alerts': 'alerts',
     'initialize-ajax': 'initialize-ajax',
     'load-patient-form': 'load-patient-form',
-    'search': 'search'
-  },
+    'search': 'search',
+    'submit-patient-form': 'submit-patient-form'
+  } ,
   shim: {
     'jquery.validate': {
       deps: ['jquery']
     },
     'bootstrap': {
-      deps: ['jquery']
-    },
-    'patient': {
-      deps: ['jquery']
-    },
-    'alerts': {
-      deps: ['jquery']
-    },
-    'initialize-ajax': {
-      deps: ['jquery']
-    },
-    'load-patient-form': {
-      deps: ['jquery']
-    },
-    'search': {
       deps: ['jquery']
     }
   }
