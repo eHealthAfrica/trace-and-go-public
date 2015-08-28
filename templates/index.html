@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en-GB">
   <head>
@@ -19,7 +21,7 @@
     <link href="//ehealthafrica.github.io/css/font-awesome.css" rel="stylesheet">
     <link href="//ehealthafrica.github.io/css/styleguide.css" rel="stylesheet">
 
-    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 
   </head>
 
@@ -27,33 +29,40 @@
 
     <nav class="navbar navbar-call-center navbar-fixed-top">
       <div class="container-fluid">
+
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+          {% if user.is_authenticated %}
+          <button type="button" class="navbar-toggle collapsed dropdown-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span style="color:white;">Menu</span>
           </button>
+          {% endif %}
           <a class="navbar-brand" href="/">
             <img src="{% static "images/app-tag-32.png" %}">
             <span>Trace & Go</span>
           </a>
         </div>
+        {% if user.is_authenticated %}
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="#">
-                Hi, Brennan Novak <span class="caret"></span>
-              </a>
+            <li class="dropdown">
+              <a id="welcome-dropdown" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Welcome, {{ user.username }} <b class="caret"></b></a>
+              <ul class="dropdown-menu" style="background-color:white;" role="menu" aria-labelledby="dLabel">
+                <li><a tabindex="-1" style="color:#0F74BD;" href="/patients/add">Add Patient</a></li>
+                <li><a tabindex="-1" style="color:#0F74BD;" href="/patients">List Patients</a></li>
+                <li><a tabindex="-1" style="color:#0F74BD;" href="/accounts/logout">Log out</a></li>
+              </ul>
             </li>
           </ul>
         </div>
+        {% endif %}
       </div>
     </nav>
 
+    {% if user.is_authenticated %}
     <div class="container-fluid">
       <div class="row wrapper">
 
+        {% block sidebar %}
         <div class="col-sm-4 col-md-3 sidebar">
           <a href="/patients/" class="btn btn-primary btn-block btn-lg">
             <span class="fa fa-bed"></span> Patients
@@ -61,30 +70,25 @@
           <a href="/patients/add/" class="btn btn-primary btn-block btn-lg">
             <span class="fa fa-plus"></span> Add Patient
           </a>
-          <a href="/health-facilities/" class="btn btn-primary btn-block btn-lg">
-            <span class="fa fa-hospital-o"></span> Health Facilities
-          </a>
         </div>
+        {% endblock %}
+        {% endif %}
 
         <div class="col-sm-8 col-md-9 main">
 
           {% block main %}
-          Welcome!
           {% endblock main %}
 
         </div>
-
       </div>
     </div>
 
-
     <!-- Bootstrap core JavaScript -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/jquery.min.js"></script>
-    <script src="//ehealthafrica.github.io/ehealth-bootstrap/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="//ehealthafrica.github.io/ehealth-bootstrap/js/thirdparty/ie10-viewport-bug-workaround.js"></script>
+    <!-- See static/js/main.js for details. -->
+    {% block javascript %}
+    <script data-main="{% static 'js/main' %}" src="{% static 'js/require.js' %}"></script>
+    {% endblock %}
 
   </body>
-
 </html>

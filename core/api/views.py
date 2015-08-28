@@ -1,8 +1,13 @@
-from rest_framework import viewsets
-from rest_framework import filters
-from rest_framework import permissions
-
 from django.db.models import Q
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+
+from rest_framework import viewsets
+from rest_framework import permissions
+from rest_framework.response import Response
+from rest_framework.decorators import list_route
+
+import rest_framework_filters as filters
 
 from core.models import (
     Patient,
@@ -26,18 +31,40 @@ class TemplateNameMixin:
                 '%s.html' % self.__class__.__name__.lower()]
 
 
+class PatientFilter(filters.FilterSet):
+    first_name = filters.AllLookupsFilter(name='first_name')
+    last_name = filters.AllLookupsFilter(name='last_name')
+    info_code = filters.AllLookupsFilter(name='info_code')
+    status = filters.AllLookupsFilter(name='status')
+
+    class Meta:
+        model = Patient
+        fields = ['first_name', 'last_name', 'info_code', 'status']
+
+
 class PatientViewSet(TemplateNameMixin, viewsets.ModelViewSet):
     serializer_class = PatientSerializer
-    filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter,)
-    filter_fields = ('first_name', 'last_name')
-    search_fields = ('first_name', 'last_name')
+    filter_class = PatientFilter
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super(PatientViewSet, self).dispatch(request, *args, **kwargs)
+
+    @list_route(url_path='add')
+    def add(self, request, *args, **kwargs):
+        return Response()
 
     def get_queryset(self):
         request = self.request
         qs = Patient.objects.filter(health_facility__caseinvestigator__user=request.user).distinct()
         if request.user.is_superuser:
             qs = Patient.objects.all()
-        return qs
+        contains = self.request.query_params.get('contains', None)
+        if contains:
+            qs = qs.filter(
+                Q(first_name__icontains=contains) | Q(last_name__icontains=contains) | Q(info_code__icontains=contains)
+            )
+        return qs.order_by('-pk')
 
 
 class IsHFAmdminOrReadOnly(permissions.BasePermission):
@@ -67,6 +94,7 @@ class ReadOnly(permissions.BasePermission):
 class HealthFacilityViewSet(TemplateNameMixin, viewsets.ModelViewSet):
     serializer_class = HealthFacilitySerializer
     permission_classes = (IsHFAmdminOrReadOnly,)
+    paginate_by_param = 'limit'
 
     def get_queryset(self):
         request = self.request

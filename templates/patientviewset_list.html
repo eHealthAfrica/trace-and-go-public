@@ -1,71 +1,66 @@
 {% extends "index.html" %}
 {% load i18n %}
+{% load staticfiles %}
 
 {% block main %}
 
-  	<h2><span class="fa fa-bed"></span> Patients</h2>
+<h2><span class="fa fa-bed"></span> Patients</h2>
+<hr>
 
-    <div>
-      <form>
-        <input type="">
-
-        <button class="btn btn-default"><i class="fa fa-search"></i> Search</button>
-
-        <div class="dropdown pull-right">
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Dropdown
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </div>
-
-      </form>
-    </div>
-
-    <table class="table table-boxed">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Info Code</th>
-          <th>Health Facility</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for patient in results %}
-        <tr>
-          <td><a href="{{patient.url}}">{{patient.first_name}} {{patient.last_name}}</a></td>
-          <td>{{patient.info_code}}</td>
-          <td><a href="{{patient.health_facility.url}}">{{patient.health_facility.name}}</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <nav class="pull-right">
-      <ul class="pagination">
-        <li>
-          <a href="#" aria-label="Previous">
-            <span aria-hidden="true">First</span>
-          </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li>
-          <a href="#" aria-label="Next">
-            <span aria-hidden="true">First</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-
+<form class="navbar-form navbar" role="search">
+  <div class="form-group pull-left">
+    <input id="searchPatientList" type="text" class="form-control" placeholder="Search">
+    <select id="filterByStatus" class="form-control">
+      <option value="" disabled>Filter by patient status (optional)</option>
+    </select>
+    <button type="submit" class="btn btn-primary form-control"><span class="glyphicon glyphicon-search">Search</span></button>
   </div>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th> Info Code </th>
+      <th>Health Facility</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for patient in results %}
+    <tr>
+      <td><a href="{{patient.url}}">{{patient.first_name}} {{patient.last_name}}</a></td>
+      <td>{{patient.get_status_display}}</td>
+      <td>{{patient.info_code}}</td>
+      <td>{{patient.health_facility.name}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<nav class="pull-right">
+  <ul class="pagination">
+    <!-- <li> -->
+    <!--   <a href="#" aria-label="Previous"> -->
+    <!--     <span aria-hidden="true">First</span> -->
+    <!--   </a> -->
+    <!-- </li> -->
+    {% if previous %}
+    <li><a href="{{previous}}">Previous</a></li>
+    {% endif %}
+    {% if next %}
+    <li><a href="{{next}}">Next</a></li>
+    {% endif %}
+    <!-- <li><a href="#">2</a></li> -->
+    <!-- <li><a href="#">3</a></li> -->
+    <!-- <li><a href="#">4</a></li> -->
+    <!-- <li><a href="#">5</a></li> -->
+    <!-- <li> -->
+    <!--   <a href="#" aria-label="Next"> -->
+    <!--     <span aria-hidden="true">First</span> -->
+    <!--   </a> -->
+    <!-- </li> -->
+  </ul>
+</nav>
 
 {% endblock %}
