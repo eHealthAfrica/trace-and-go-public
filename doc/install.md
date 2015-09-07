@@ -26,6 +26,10 @@ After you have all the tool dependencies installed for your respective OS, move 
 
 Make your `/amsel/local_settings.py` file with at least `DEBUG=True` in it
 
+Install Javascript dependencies:
+
+    $ bower install
+
 ## In tab 2 start the db
 NOTE: when this session is stopped, the data will be lose.
 
@@ -38,7 +42,7 @@ NOTE: when this session is stopped, the data will be lose.
 
     $ sudo docker-compose run web bash
 
-*On some sytems (MacOS for instance) you need to press enter after this command to actually be dropped into the docker shell*
+*On some systems (MacOS for instance) you need to press enter after this command to actually be dropped into the docker shell*
 
 Now within the docker container as root
 
