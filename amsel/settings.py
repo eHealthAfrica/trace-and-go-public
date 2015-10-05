@@ -169,6 +169,6 @@ TW_AUTH = os.environ.get("TW_AUTH", "!@#THIS_IS_REALLY_SECURE!@#$%")
 HEALTH_WORKER_GROUP_ID = 1  # Set this once and don't change it.
 
 try:
-    from local_settings import * # noqa
+    from local_settings import *  # noqa
 except ImportError as e:
     print e
