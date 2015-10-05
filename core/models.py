@@ -159,5 +159,5 @@ from django.contrib.auth.models import Group
 def my_handler(sender, instance, **kwargs):
     group = Group.objects.get(id=settings.HEALTH_WORKER_GROUP_ID)
     instance.user.groups.add(group)
-    instance.user.is_staff = True
+    instance.user.is_staff = False
     instance.user.save()
