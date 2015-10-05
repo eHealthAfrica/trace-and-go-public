@@ -170,5 +170,5 @@ HEALTH_WORKER_GROUP_ID = 1  # Set this once and don't change it.
 
 try:
     from local_settings import * # noqa
-except ImportError:
-    pass
+except ImportError as e:
+    print e
